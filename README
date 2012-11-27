@@ -1,4 +1,4 @@
-flask-gitrpc
+flask_gitrpc
 --------------
 
 Protocol Buffers for the Github API.

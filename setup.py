@@ -1,39 +1,41 @@
 #!/usr/bin/python
 """
-flask-gitrpc
+flask_gitrpc
 --------------
 
 Protocol Buffers for the Github API.
 
-http://github.com/gregorynicholas/flask-gitrpc
+http://github.com/gregorynicholas/flask_gitrpc
 `````
 
-* `documentation <http://packages.python.org/flask-gitrpc>`_
+* `documentation <http://packages.python.org/flask_gitrpc>`_
 * `development version
-  <http://github.com/gregorynicholas/flask-gitrpc/zipball/master#egg=flask-gitrpc-dev>`_
+  <http://github.com/gregorynicholas/flask_gitrpc/zipball/master#egg=flask_gitrpc-dev>`_
 
 """
 from setuptools import setup
 
 setup(
-  name='flask-gitrpc',
+  name='flask_gitrpc',
   version='1.0.0',
   url='http://github.com/gregorynicholas/flask-gitrpc',
   license='MIT',
   author='gregorynicholas',
   description='Protocol Buffers for the Github API.',
   long_description=__doc__,
-  packages=['flaskext'],
-  namespace_packages=['flaskext'],
+  packages=[
+    'flask_gitrpc'
+    'flask_gitrpc.github'
+  ],
+  namespace_packages=[
+    'flask_gitrpc'
+  ],
   py_modules=[
-    'flaskext.client',
-    'flaskext.config',
-    'flaskext.github',
-    'flaskext.messages',
+    'flask_gitrpc.gitrpc',
   ],
   zip_safe=False,
   platforms='any',
-  install_requires=['flask', 'flask-oauth', 'flask-protorpc'],
+  install_requires=['flask', 'flask-oauth', 'flask_protorpc'],
   classifiers=[
     'Development Status :: 4 - Beta',
     'Environment :: Web Environment',
