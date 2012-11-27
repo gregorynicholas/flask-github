@@ -1,4 +1,4 @@
-from flask_protorpc import messages as msgs
+from flask_protorpc.proto import messages as msgs
 from messages import *
 
 class RepoResponse(msgs.Message):
@@ -37,10 +37,10 @@ class TeamResponse(msgs.Message):
 class TeamListResponse(msgs.Message):
   response = msgs.MessageField('Team', 1, repeated=True)
 
-class TagReponse(msgs.Message):
+class TagResponse(msgs.Message):
   response = msgs.MessageField('Tag', 1)
 
-class TagListReponse(msgs.Message):
+class TagListResponse(msgs.Message):
   response = msgs.MessageField('Tag', 1, repeated=True)
 
 class KeyResponse(msgs.Message):
@@ -49,10 +49,10 @@ class KeyResponse(msgs.Message):
 class KeyListResponse(msgs.Message):
   response = msgs.MessageField('Key', 1, repeated=True)
 
-class UserReponse(msgs.Message):
+class UserResponse(msgs.Message):
   response = msgs.MessageField('User', 1)
 
-class UserListReponse(msgs.Message):
+class UserListResponse(msgs.Message):
   response = msgs.MessageField('User', 1, repeated=True)
 
 class GitDataBlobResponse(msgs.Message):
@@ -68,13 +68,13 @@ class GitDataReferenceListResponse(msgs.Message):
   response = msgs.MessageField('GitDataReference', 1, repeated=True)
 
 class PullReviewCommentResponse(msgs.Message):
-  response = msgs.MessageField('PullReviewComment')
+  response = msgs.MessageField('PullReviewComment', 1)
 
 class PullReviewCommentListResponse(msgs.Message):
   response = msgs.MessageField('PullReviewComment', 1, repeated=True)
 
 class PullRequestResponse(msgs.Message):
-  response = msgs.MessageField('PullRequest')
+  response = msgs.MessageField('PullRequest', 1)
 
 class PullRequestListResponse(msgs.Message):
   response = msgs.MessageField('PullRequest', 1, repeated=True)

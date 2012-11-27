@@ -7,15 +7,15 @@ from ..requests import UserResponse
 class Users:
   def __init__(self, client):
     self.client = client
+    self.keys = UsersKeys(self.client)
     self.emails = UsersEmails(self.client)
     self.followers = UsersFollowers(self.client)
-    self.keys = UsersKeys(self.client)
 
   def get_user(self, user=None):
     url = 'user'
-    if (user is not None and user != self.client.username):
+    if (user is not None and user != self.client._username):
       url = 'users/%s' % user
-    return self.client.get(url, UserResponse)
+    return self.client.get(url, message_type=UserResponse)
 
   def update_user(self, name=None, email=None, blog=None, company=None,
       location=None, hireable=False, bio=None):

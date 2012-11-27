@@ -16,7 +16,7 @@ http://github.com/gregorynicholas/flask_gitrpc
 from setuptools import setup
 
 setup(
-  name='flask_gitrpc',
+  name='flask-gitrpc',
   version='1.0.0',
   url='http://github.com/gregorynicholas/flask-gitrpc',
   license='MIT',
@@ -24,18 +24,25 @@ setup(
   description='Protocol Buffers for the Github API.',
   long_description=__doc__,
   packages=[
-    'flask_gitrpc'
-    'flask_gitrpc.github'
+    'flask_gitrpc.github',
+    'flask_gitrpc.github.events',
+    'flask_gitrpc.github.gists',
+    'flask_gitrpc.github.gitdata',
+    'flask_gitrpc.github.issues',
+    'flask_gitrpc.github.orgs',
+    'flask_gitrpc.github.pullreqs',
+    'flask_gitrpc.github.repos',
+    'flask_gitrpc.github.users',
   ],
   namespace_packages=[
-    'flask_gitrpc'
+    'flask_gitrpc',
   ],
   py_modules=[
     'flask_gitrpc.gitrpc',
   ],
   zip_safe=False,
   platforms='any',
-  install_requires=['flask', 'flask-oauth', 'flask_protorpc'],
+  install_requires=['flask', 'flask-oauth', 'flask-protorpc'],
   classifiers=[
     'Development Status :: 4 - Beta',
     'Environment :: Web Environment',
@@ -45,39 +52,5 @@ setup(
     'Programming Language :: Python',
     'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     'Topic :: Software Development :: Libraries :: Python Modules'
-  ]
-)
-
-
-
-from distutils import core
-
-core.setup(
-  name='gitrpc',
-  version='0.1.1',
-  author='Gregory Nicholas',
-  description='',
-  url='https://github.com/gregorynicholas/gitrpc',
-  packages=[
-    'gitrpc',
-    'gitrpc.events',
-    'gitrpc.gists',
-    'gitrpc.gitdata',
-    'gitrpc.issues',
-    'gitrpc.orgs',
-    'gitrpc.pullreqs',
-    'gitrpc.repos',
-    'gitrpc.users',
-  ],
-  py_modules=[
-    'gitrpc.client',
-    'gitrpc.config',
-    'gitrpc.github',
-    'gitrpc.messages',
-  ],
-  install_requires=[
-    'requests',
-    # -e git@github.com:gregorynicholas/google-protorpc.git#egg=protorpc
-    'google-protorpc',
   ]
 )

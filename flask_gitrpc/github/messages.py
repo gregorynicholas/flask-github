@@ -1,4 +1,4 @@
-from flask_protorpc import messages as msgs
+from flask_protorpc.proto import messages as msgs
 
 class Link(msgs.Message):
   href = msgs.StringField(1)
@@ -22,6 +22,19 @@ class User(msgs.Message):
   _links = msgs.MessageField('Link', 13, repeated=True)
   # 2012-10-15T18:37:04-07:00
   date = msgs.StringField(14)
+  created_at = msgs.StringField(15)
+  type = msgs.StringField(16)
+  following = msgs.IntegerField(17, default=0)
+  followers = msgs.IntegerField(18, default=0)
+  public_repos = msgs.IntegerField(19, default=0)
+  public_gists = msgs.IntegerField(20, default=0)
+  total_private_repos = msgs.IntegerField(21, default=0)
+  owned_private_repos = msgs.IntegerField(22, default=0)
+  private_gists = msgs.IntegerField(23, default=0)
+  disk_usage = msgs.IntegerField(24, default=0)
+  collaborators = msgs.IntegerField(25, default=0)
+  html_url = msgs.StringField(26)
+
 
 class RepoPermission(msgs.Message):
   push = msgs.BooleanField(1, default=False)

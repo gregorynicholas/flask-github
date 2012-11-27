@@ -1,4 +1,3 @@
-from urllib import urlencode
 from pullreqsreviewcomments import PullReviewComments
 from ..messages import PullRequest
 from ..messages import CommitMessage
@@ -11,10 +10,11 @@ class PullRequests:
     self.reviewcomments = PullReviewComments(self.client)
 
   def list_pull_requests(self, repo, state=None, user=None):
-    url = 'repos/%s/%s/pulls' % (self.client.username(user), repo)
+    query = None
     if state:
-      url += '?%s' % (urlencode({'state': state}))
-    return self.client.get(url, PullRequestListResponse)
+      query = {'state': state}
+    return self.client.get('repos/%s/%s/pulls' % (self.client.username(user),
+      repo), query=query, message_type=PullRequestListResponse)
 
   def get_pull_request(self, repo, id, user=None):
     return self.client.get(

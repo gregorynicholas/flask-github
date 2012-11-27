@@ -1,4 +1,4 @@
-from ..models import Tree
+from ..messages import Tree
 from ..requests import TreeResponse
 from ..requests import TreeListResponse
 
