@@ -101,7 +101,7 @@ class GitRpc:
 
   def _url(self, path, query=None):
     params = {}
-    if query is not None:
+    if query and isinstance(query, dict):
       params.update(query)
     path += '?%s' % urlencode(params)
     print 'api request url path: %s' % path
