@@ -136,11 +136,20 @@ class Blob(msgs.Message):
 
 
 class Org(msgs.Message):
-  billing_email = msgs.StringField(1)
-  company = msgs.StringField(2)
-  email = msgs.StringField(3)
-  location = msgs.StringField(4)
-  name = msgs.StringField(5)
+  id = msgs.IntegerField(1, default=0)
+  login = msgs.StringField(2)
+  company = msgs.StringField(3)
+  billing_email = msgs.StringField(4)
+  email = msgs.StringField(5)
+  location = msgs.StringField(6)
+  name = msgs.StringField(7)
+  members = msgs.MessageField('User', 8, repeated=True)
+  url = msgs.StringField(9)
+  repos_url = msgs.StringField(10)
+  events_url = msgs.StringField(11)
+  avatar_url = msgs.StringField(12)
+  members_url = msgs.StringField(13)
+  public_members_url = msgs.StringField(14)
 
 class Team(msgs.Message):
   name = msgs.StringField(1)

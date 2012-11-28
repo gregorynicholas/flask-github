@@ -7,13 +7,11 @@ class ReposCommits:
     self.client = client
 
   def list_commits(self, repo, sha=None, path=None, user=None):
-    params = {'sha': sha, 'path': path}
-    url = 'repos/%s/%s/commits' % (self.client.user(user), repo)
+    query = None
     if sha and path:
-      # todo: urlencode params?
-      url = 'repos/%s/%s/commits?%s' % (
-        self.client.user(user), repo, params)
-    return self.client.get(url, msg_type=RepoCommitListResponse)
+      query = {'sha': sha, 'path': path}
+    return self.client.get('repos/%s/%s/commits' % (
+      self.client.user(user), repo), query=query, msg_type=RepoCommitListResponse)
 
   def get_commit(self, repo, sha, user=None):
     return self.client.get(
@@ -44,7 +42,7 @@ class ReposCommits:
   def get_single_comment(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/comment/%s' % (
-        self.client.user(user), repo, id))
+        self.client.user(user), repo, id), msg_type=None)
 
   def update_comment(self, repo, id, body, user=None):
     msg = RepoCommit(

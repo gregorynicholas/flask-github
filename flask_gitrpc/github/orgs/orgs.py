@@ -7,12 +7,12 @@ from ..requests import OrgListResponse
 class Orgs:
   def __init__(self, client):
     self.client = client
-    self.members = OrgMembers(self.client)
     self.teams = OrgTeams(self.client)
+    self.members = OrgMembers(self.client)
 
   def list_orgs(self, user=None):
     url = 'user/orgs'
-    if user != self.client._username:
+    if user and user != self.client._username:
       url = 'users/%s/orgs' % self.client.user(user)
     return self.client.get(url, msg_type=OrgListResponse)
 

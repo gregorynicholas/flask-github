@@ -87,12 +87,12 @@ class Repos:
       'repos/%s/%s/contributors' % (
         self.client.user(user), repo), msg_type=UserListResponse)
 
-  def list_tags(self, repo, user=None ):
+  def list_tags(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/tags' % (
         self.client.user(user), repo), msg_type=TagListResponse)
 
-  def list_langs(self, repo, user=None ):
+  def list_langs(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/languages' % (
         self.client.user(user), repo))

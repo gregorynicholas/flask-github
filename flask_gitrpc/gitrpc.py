@@ -108,18 +108,16 @@ class GitRpc:
     return path
 
   def _remote(self, response, msg_type=None):
-    print 'RESPONSE: %s' % response
+    # print 'RESPONSE: %s' % response
     if msg_type is not None:
       # todo: i need a root node.. i don't knot if i can serialize anonymous
       # root lists.. so i'm serializing, adding root node, then encoding back
       # to a json str.. sorry for the waste.
-      if not isinstance(response, dict):
-        response = loads(response)
       response = dumps({'response': response})
       try:
         return message_from_json(msg_type, response)
       except AttributeError, e:
-        print 'AttributeError decoding json: %s: %s' % (e, response)
+        print 'AttributeError decoding json: %s\n\nRESPONSE: %s' % (e, response)
       return msg_type()
     else:
       return dict(
