@@ -93,6 +93,12 @@ class GitCommit(msgs.Message):
   mode = msgs.StringField(10)
   type = msgs.StringField(11)
   size = msgs.IntegerField(12, default=0)
+  # fields for the hooks payload..
+  id = msgs.StringField(13)
+  timestamp = msgs.StringField(14)
+  added = msgs.StringField(15, repeated=True)
+  removed = msgs.StringField(16, repeated=True)
+  modified = msgs.StringField(17, repeated=True)
 
 class RepoCommit(msgs.Message):
   author = msgs.MessageField('User', 1)
@@ -188,6 +194,13 @@ class RepoHook(msgs.Message):
   add_events = msgs.BooleanField(4, default=True)
   remove_events = msgs.BooleanField(5, default=True)
   active = msgs.BooleanField(6, default=True)
+
+class CommitHookPayload(msgs.Message):
+  before = msgs.StringField(1)
+  after = msgs.StringField(2)
+  ref = msgs.StringField(3)
+  commits = msgs.MessageField('GitCommit', 4)
+  repository = msgs.MessageField('Repo', 5)
 
 class Key(msgs.Message):
   title = msgs.StringField(1)
