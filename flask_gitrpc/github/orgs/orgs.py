@@ -1,7 +1,7 @@
 from orgteams import OrgTeams
 from orgmembers import OrgMembers
 from ..messages import Org
-from ..requests import OrgResponse
+from ..requests import UserResponse
 from ..requests import OrgListResponse
 
 class Orgs:
@@ -16,10 +16,10 @@ class Orgs:
       url = 'users/%s/orgs' % self.client.user(user)
     return self.client.get(url, msg_type=OrgListResponse)
 
-  def get_org(self, org):
-    return self.client.get('orgs/%s' % org, msg_type=OrgResponse)
+  def get_org(self, login):
+    return self.client.get('orgs/%s' % login, msg_type=UserResponse)
 
-  def edit_org(self, org, billing_email=None, company=None, email=None,
+  def edit_org(self, login, billing_email=None, company=None, email=None,
       location=None, name=None):
     msg = Org(
       billing_email=billing_email,
@@ -27,4 +27,4 @@ class Orgs:
       email=email,
       location=location,
       name=name)
-    return self.client.patch('org/%s' % org, msg)
+    return self.client.patch('org/%s' % login, msg)

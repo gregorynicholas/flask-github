@@ -34,7 +34,10 @@ class User(msgs.Message):
   disk_usage = msgs.IntegerField(24, default=0)
   collaborators = msgs.IntegerField(25, default=0)
   html_url = msgs.StringField(26)
-
+  repos_url = msgs.StringField(27)
+  events_url = msgs.StringField(28)
+  members_url = msgs.StringField(29)
+  public_members_url = msgs.StringField(30)
 
 class RepoPermission(msgs.Message):
   push = msgs.BooleanField(1, default=False)
@@ -42,7 +45,6 @@ class RepoPermission(msgs.Message):
   admin = msgs.BooleanField(3, default=False)
 
 class Repo(msgs.Message):
-  # "2012-06-01T06:33:47Z"
   created_at = msgs.StringField(1)
   has_downloads = msgs.BooleanField(2, default=False)
   url = msgs.StringField(3)
@@ -127,6 +129,11 @@ class Tag(msgs.Message):
   sha = msgs.StringField(7)
   url = msgs.StringField(8)
 
+class RepoTag(msgs.Message):
+  name = msgs.StringField(1)
+  commit = msgs.MessageField('GitCommit', 2)
+  zipball_url = msgs.StringField(3)
+  tarball_url = msgs.StringField(4)
 
 class Blob(msgs.Message):
   content = msgs.BytesField(1)
@@ -173,7 +180,6 @@ class CommitMessage(msgs.Message):
 
 class PullReviewComment(msgs.Message):
   commit_message = msgs.StringField(1)
-
 
 class RepoHook(msgs.Message):
   name = msgs.StringField(1)

@@ -10,7 +10,7 @@ from reposcollaborators import ReposCollaborators
 from ..messages import Repo
 from ..requests import RepoResponse
 from ..requests import RepoListResponse
-from ..requests import TagListResponse
+from ..requests import RepoTagListResponse
 from ..requests import UserListResponse
 from ..requests import TeamListResponse
 
@@ -90,7 +90,7 @@ class Repos:
   def list_tags(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/tags' % (
-        self.client.user(user), repo), msg_type=TagListResponse)
+        self.client.user(user), repo), msg_type=RepoTagListResponse)
 
   def list_langs(self, repo, user=None):
     return self.client.get(

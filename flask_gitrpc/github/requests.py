@@ -43,6 +43,12 @@ class TagResponse(msgs.Message):
 class TagListResponse(msgs.Message):
   response = msgs.MessageField('Tag', 1, repeated=True)
 
+class RepoTagResponse(msgs.Message):
+  response = msgs.MessageField('RepoTag', 1)
+
+class RepoTagListResponse(msgs.Message):
+  response = msgs.MessageField('RepoTag', 1, repeated=True)
+
 class KeyResponse(msgs.Message):
   response = msgs.MessageField('Key', 1)
 
@@ -78,9 +84,6 @@ class PullRequestResponse(msgs.Message):
 
 class PullRequestListResponse(msgs.Message):
   response = msgs.MessageField('PullRequest', 1, repeated=True)
-
-class OrgResponse(msgs.Message):
-  response = msgs.MessageField('Org', 1)
 
 class OrgListResponse(msgs.Message):
   response = msgs.MessageField('Org', 1, repeated=True)
