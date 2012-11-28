@@ -7,12 +7,12 @@ class UsersFollowers:
   def list_followers(self, user=None):
     url = 'users/%s/followers' % user if (
       user is not None and user != self.client._username) else 'user/followers'
-    return self.client.get(url, UserListResponse)
+    return self.client.get(url, msg_type=UserListResponse)
 
   def list_following(self, user=None):
     url = 'users/%s/following' % user if (
       user is not None and user != self.client._username) else 'user/following'
-    return self.client.get(url, UserListResponse)
+    return self.client.get(url, msg_type=UserListResponse)
 
   def check_if_following(self, user):
     return self.client.get(

@@ -10,7 +10,7 @@ class GitDataCommits:
   def get_commit(self, repo, sha, user=None):
     return self.client.get(
       'repos/%s/%s/git/commits/%s' % (
-        self.client.username(user), repo, sha), GitDataCommitListResponse)
+        self.client.user(user), repo, sha), msg_type=GitDataCommitListResponse)
 
   def create_commit(self, repo, message, tree, parents, author_name=None,
     author_email=None, author_date=None, committer_name=None,
@@ -29,4 +29,4 @@ class GitDataCommits:
         date=commiter_date))
     return self.client.post(
       'repos/%s/%s/git/commits' % (
-        self.client.username(user), repo), msg, GitDataCommitResponse)
+        self.client.user(user), repo), msg, msg_type=GitDataCommitResponse)

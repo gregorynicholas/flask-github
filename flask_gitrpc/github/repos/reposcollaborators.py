@@ -8,19 +8,19 @@ class ReposCollaborators:
   def list(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/collaborators' % (
-        self.client.username(user), repo), UserListResponse)
+        self.client.user(user), repo), msg_type=UserListResponse)
 
   def get(self, repo, collaborator, user=None):
     return self.client.get(
       'repos/%s/%s/collaborators/%s' % (
-        self.client.username(user), repo, collaborator), UserResponse)
+        self.client.user(user), repo, collaborator), msg_type=UserResponse)
 
   def add(self, repo, collaborator, user=None):
     return self.client.put(
       'repos/%s/%s/collaborators/%s' % (
-        self.client.username(user), repo, collaborator), UserResponse)
+        self.client.user(user), repo, collaborator), msg_type=UserResponse)
 
   def delete(self, repo, collaborator, user=None):
     return self.client.delete(
       'repos/%s/%s/collaborators/%s' % (
-        self.client.username(user), repo, collaborator))
+        self.client.user(user), repo, collaborator))

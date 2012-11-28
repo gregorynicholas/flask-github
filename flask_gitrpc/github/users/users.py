@@ -15,7 +15,7 @@ class Users:
     url = 'user'
     if (user is not None and user != self.client._username):
       url = 'users/%s' % user
-    return self.client.get(url, message_type=UserResponse)
+    return self.client.get(url, msg_type=UserResponse)
 
   def update_user(self, name=None, email=None, blog=None, company=None,
       location=None, hireable=False, bio=None):

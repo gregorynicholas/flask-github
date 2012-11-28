@@ -1,4 +1,3 @@
-import urllib
 from issuesevents import IssuesEvents
 from issueslabels import IssuesLabels
 from issuescomments import IssuesComments
@@ -14,7 +13,7 @@ class Issues:
 
   def list_issues(self, filter='assigned', state='open', labels=None,
       sort='created', direction='desc', since=None):
-    params = {
+    query = {
       'filter': filter,
       'state': state,
       'labels': labels,
@@ -22,12 +21,12 @@ class Issues:
       'direction': direction,
       'since': since
     }
-    return self.client.get('issues?%s' % urllib.urlencode(params))
+    return self.client.get('issues', query=query, msg_type=None)
 
   def list_repo_issues(self, repo, milestone=None, assignee=None,
     mentioned=None, state='open', labels=None, sort='created', direction='desc',
     since=None, user=None):
-    params = {
+    query = {
       'state': state,
       'assignee': assignee,
       'mentioned': mentioned,
@@ -37,13 +36,13 @@ class Issues:
       'since': since,
       'milestone': milestone
     }
-    return self.client.get('repos/%s/%s/issues?%s' % (
-      self.client.username(user), repo, urllib.urlencode(params)))
+    return self.client.get('repos/%s/%s/issues' % (
+      self.client.user(user), repo), query=query, msg_type=None)
 
   def get_issue(self, repo, number, user=None):
     return self.client.get(
       'repos/%s/%s/issues/%s' % (
-        self.client.username(user), repo, number))
+        self.client.user(user), repo, number), msg_type=None)
 
   def create_issue(self, repo, title, body=None, assignee=None,
       milestone=None, labels=None, user=None):
@@ -55,7 +54,7 @@ class Issues:
       'labels': labels
     }
     return self.client.post('repos/%s/%s/issues' % (
-      self.client.username(user), repo), msg)
+      self.client.user(user), repo), msg)
 
   def edit_issue(self, repo, id, title=None, body=None, assignee=None,
       state=None, milestone=None, labels=None, user=None):
@@ -69,4 +68,4 @@ class Issues:
     }
     return self.client.post(
       'repos/%s/%s/issues/%s' % (
-        self.client.username(user), repo, id), msg)
+        self.client.user(user), repo, id), msg)

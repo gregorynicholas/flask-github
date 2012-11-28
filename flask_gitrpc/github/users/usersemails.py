@@ -6,7 +6,7 @@ class UsersEmails:
 
   def list_emails(self):
     return self.client.get(
-      'user/emails')
+      'user/emails', message_type=None)
 
   def add_emails(self, emails):
     return self.client.post(

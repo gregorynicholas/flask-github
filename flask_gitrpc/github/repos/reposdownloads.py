@@ -7,12 +7,12 @@ class ReposDownloads:
   def get_downloads(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/downloads' % (
-        self.client.username(user), repo))
+        self.client.username(user), repo), msg_type=None)
 
   def get_download(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/downloads/%s' % (
-        self.client.username(user), repo, id))
+        self.client.username(user), repo, id), msg_type=None)
 
   def create_new_download(self, repo, name, size, description=None,
       content_type=None, user=None):

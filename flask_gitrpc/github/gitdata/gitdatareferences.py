@@ -9,16 +9,16 @@ class GitDataReferences:
   def get_reference(self, repo, ref, user=None):
     return self.client.get(
       'repos/%s/%s/git/refs/%s' % (
-        self.client.username(user), repo, ref), GitDataReferenceResponse)
+        self.client.user(user), repo, ref), msg_type=GitDataReferenceResponse)
 
   def get_references(self, repo, subnamespace=None, user=None):
-    url = 'repos/%s/%s/git/refs' % (repo, self.client.username(user))
+    url = 'repos/%s/%s/git/refs' % (repo, self.client.user(user))
     if subnamespace:
       if subnamespace[0] == '/':
         url += subnamespace
       else:
         url += subnamespace
-    return self.client.get(url, GitDataReferenceListResponse)
+    return self.client.get(url, msg_type=GitDataReferenceListResponse)
 
   def create_reference(self, repo, ref, sha, user=None):
     msg = GitDataReference(
@@ -26,7 +26,7 @@ class GitDataReferences:
       sha=sha)
     return self.client.post(
       'repos/%s/%s/git/refs' % (
-        self.client.username(user), repo), msg)
+        self.client.user(user), repo), msg)
 
   def edit_reference(self, repo, sha, force=False, user=None):
     msg = GitDataReference(
@@ -34,4 +34,4 @@ class GitDataReferences:
       sha=sha)
     return self.client.patch(
       'repos/%s/%s/git/refs' % (
-        self.client.username(user), repo), msg)
+        self.client.user(user), repo), msg)

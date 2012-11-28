@@ -9,12 +9,12 @@ class ReposHooks:
   def list_hooks(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/hooks' % (
-        self.client.username(user), repo), RepoHookListResponse)
+        self.client.user(user), repo), msg_type=RepoHookListResponse)
 
   def get_hook(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/hooks/%s' % (
-        self.client.username(user), repo, id), RepoHookResponse)
+        self.client.user(user), repo, id), msg_type=RepoHookResponse)
 
   def create_hook(self, repo, name, config, events=None, active=True,
       user=None):
@@ -25,7 +25,7 @@ class ReposHooks:
       active=active)
     return self.client.post(
       'repos/%s/%s/hooks' % (
-        self.client.username(user), repo), msg)
+        self.client.user(user), repo), msg)
 
   def edit_hook(self, repo, id, name, config, events=None, add_events=None,
       remove_events=None, active=True, user=None):
@@ -38,14 +38,14 @@ class ReposHooks:
       remove_events=remove_events)
     return self.client.patch(
       'repos/%s/%s/hooks/%s' % (
-        self.client.username(user), repo, id), msg)
+        self.client.user(user), repo, id), msg)
 
   def test_hook(self, repo, id, user=None):
     return self.client.post(
       'repos/%s/%s/hooks/%s/test' % (
-        self.client.username(user), repo, id))
+        self.client.user(user), repo, id))
 
   def delete_hook(self, repo, id, user=None):
     return self.client.delete(
       'repos/%s/%s/hooks/%s' % (
-        self.client.username(user), repo, id))
+        self.client.user(user), repo, id))

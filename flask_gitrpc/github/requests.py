@@ -78,3 +78,9 @@ class PullRequestResponse(msgs.Message):
 
 class PullRequestListResponse(msgs.Message):
   response = msgs.MessageField('PullRequest', 1, repeated=True)
+
+class OrgRequestResponse(msgs.Message):
+  response = msgs.MessageField('OrgRequest', 1)
+
+class OrgRequestListResponse(msgs.Message):
+  response = msgs.MessageField('OrgRequest', 1, repeated=True)

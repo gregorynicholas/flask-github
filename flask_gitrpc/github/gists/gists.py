@@ -5,16 +5,16 @@ class Gists:
 
   def list_gists(self, user=None):
     url = 'users/%s/gists' % user if user else 'gists'
-    return self.client.get(url)
+    return self.client.get(url, msg_type=None)
 
   def list_public_gists(self):
-    return self.client.get('gists/public')
+    return self.client.get('gists/public', msg_type=None)
 
   def list_starred_gists(self):
-    return self.client.get('gists/starred')
+    return self.client.get('gists/starred', msg_type=None)
 
   def get_gist(self, id):
-    return self.client.get('gists/%s' % id)
+    return self.client.get('gists/%s' % id, msg_type=None)
 
   def create_gist(self, public, files, description=None):
     msg = {
@@ -34,7 +34,7 @@ class Gists:
   def star_gist(self, id):
     return self.client.put('gists/%s/star' % id)
 
-  def unStar_gist(self, id):
+  def unstar_gist(self, id):
     return self.client.delete('gists/%s/star' % id)
 
   def check_if_gist_starred(self, id):

@@ -11,10 +11,10 @@ class OrgTeams:
     self.client = client
 
   def list_teams(self, org):
-    return self.client.get('orgs/%s/teams' % org, TeamListResponse)
+    return self.client.get('orgs/%s/teams' % org, msg_type=TeamListResponse)
 
   def get_team(self, id):
-    return self.client.get('teams/%s' % id, TeamResponse)
+    return self.client.get('teams/%s' % id, msg_type=TeamResponse)
 
   def create_team(self, org, name, repo_names=None, permission=None):
     msg = Team(
@@ -39,28 +39,28 @@ class OrgTeams:
 
   def get_team_member(self, id, user=None):
     return self.client.get(
-      'teams/%s/members/%s' % (id, self.client.username(user)), UserResponse)
+      'teams/%s/members/%s' % (id, self.client.user(user)), msg_type=UserResponse)
 
   def add_team_member(self, id, user):
     return self.client.put(
-      'teams/%s/members/%s' % (id, self.client.username(user)))
+      'teams/%s/members/%s' % (id, self.client.user(user)))
 
   def delete_team_member(self, id, user):
     return self.client.delete(
-      'teams/%s/members/%s' % (id, self.client.username(user)))
+      'teams/%s/members/%s' % (id, self.client.user(user)))
 
   def list_team_repos(self, id):
     return self.client.get(
-      'teams/%s/repos' % id, RepoListResponse)
+      'teams/%s/repos' % id, msg_type=RepoListResponse)
 
   def get_team_repo(self, id, user, repo):
     return self.client.get(
-      'teams/%s/repos/%s/%s' % (id, self.client.username(user), repo), RepoResponse)
+      'teams/%s/repos/%s/%s' % (id, self.client.user(user), repo), msg_type=RepoResponse)
 
   def add_team_repo(self, id, user, repo):
     return self.client.put(
-      'teams/%s/repos/%s/%s' % (id, self.client.username(user), repo))
+      'teams/%s/repos/%s/%s' % (id, self.client.user(user), repo))
 
   def remove_team_repo(self, id, user, repo):
     return self.client.delete(
-      'teams/%s/repos/%s/%s' % (id, self.client.username(user), repo))
+      'teams/%s/repos/%s/%s' % (id, self.client.user(user), repo))

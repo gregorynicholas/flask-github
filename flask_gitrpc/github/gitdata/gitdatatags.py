@@ -10,7 +10,7 @@ class GitDataTags:
   def get_tag(self, repo, sha, user=None):
     return self.client.get(
       'repos/%s/%s/git/tags/%s' % (
-        self.client.username(user), repo, sha), TagListResponse)
+        self.client.user(user), repo, sha), msg_type=TagListResponse)
 
   def create_tag(self, repo, tag, message, object, type, tagger_name,
       tagger_email, tagger_date, user=None):
@@ -23,7 +23,6 @@ class GitDataTags:
       name=tagger_name,
       email=tagger_email,
       date=tagger_date)
-
     return self.github.post(
       'repos/%s/%s/git/tags' % (
-        self.client.username(user), repo), msg, TagResponse)
+        self.client.user(user), repo), msg, msg_type=TagResponse)

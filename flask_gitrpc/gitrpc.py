@@ -75,29 +75,29 @@ class GitRpc:
     return result.data
 
 
-  def head(self, path, query=None, message_type=None):
+  def head(self, path, query=None, msg_type=None):
     response = self.call(path, query=query, method='HEAD')
-    return self._remote(response, message_type)
+    return self._remote(response, msg_type)
 
-  def get(self, path, query=None, message_type=None):
+  def get(self, path, query=None, msg_type=None):
     response = self.call(path, query=query, method='GET')
-    return self._remote(response, message_type)
+    return self._remote(response, msg_type)
 
-  def post(self, path, query=None, data=None, message_type=None):
+  def post(self, path, query=None, data=None, msg_type=None):
     response = self.call(path, query=query, data=self.msg(data), method='POST')
-    return self._remote(response, message_type)
+    return self._remote(response, msg_type)
 
-  def patch(self, path, query=None, data=None, message_type=None):
+  def patch(self, path, query=None, data=None, msg_type=None):
     response = self.call(path, query=query, data=self.msg(data), method='PATCH')
-    return self._remote(response, message_type)
+    return self._remote(response, msg_type)
 
-  def put(self, path, query=None, data=None, message_type=None):
+  def put(self, path, query=None, data=None, msg_type=None):
     response = self.call(path, query=query, data=self.msg(data), method='PUT')
-    return self._remote(response, message_type)
+    return self._remote(response, msg_type)
 
-  def delete(self, path, query=None, data=None, message_type=None):
+  def delete(self, path, query=None, data=None, msg_type=None):
     response = self.call(path, query=query, data=self.msg(data), method='DELETE')
-    return self._remote(response, message_type)
+    return self._remote(response, msg_type)
 
   def _url(self, path, query=None):
     params = {}
@@ -107,9 +107,9 @@ class GitRpc:
     print 'api request url path: %s' % path
     return path
 
-  def _remote(self, response, message_type=None):
+  def _remote(self, response, msg_type=None):
     print 'RESPONSE: %s' % response
-    if message_type is not None:
+    if msg_type is not None:
       # todo: i need a root node.. i don't knot if i can serialize anonymous
       # root lists.. so i'm serializing, adding root node, then encoding back
       # to a json str.. sorry for the waste.
@@ -117,10 +117,10 @@ class GitRpc:
         response = loads(response)
       response = dumps({'response': response})
       try:
-        return message_from_json(message_type, response)
+        return message_from_json(msg_type, response)
       except AttributeError, e:
         print 'AttributeError decoding json: %s: %s' % (e, response)
-      return message_type()
+      return msg_type()
     else:
       return dict(
         headers=dumps({}), body=response)
@@ -136,6 +136,9 @@ class GitRpc:
     return message_from_json(*args, **kwargs)
 
   def username(self, user):
+    return self.user(user)
+
+  def user(self, user):
     return self._username if user is None else user
 
   def password(self):

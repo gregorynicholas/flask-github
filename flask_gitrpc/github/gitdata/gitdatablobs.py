@@ -8,7 +8,7 @@ class GitDataBlobs:
   def get_blob(self, repo, sha, user=None):
     return self.client.get(
       'repos/%s/%s/git/blobs/%s' % (
-        self.client.username(user), repo, sha), GitDataBlobResponse)
+        self.client.user(user), repo, sha), msg_type=GitDataBlobResponse)
 
   def create_blob(self, repo, content, encoding, user=None):
     msg = Blob(
@@ -16,4 +16,4 @@ class GitDataBlobs:
       encoding=encoding)
     return self.client.post(
       'repos/%s/%s/git/blobs' % (
-        self.client.username(user), repo), msg, GitDataBlobResponse)
+        self.client.user(user), repo), msg, msg_type=GitDataBlobResponse)

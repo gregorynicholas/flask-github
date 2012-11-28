@@ -6,15 +6,15 @@ class ReposForks:
     self.client = client
 
   def list_forks(self, repo, sort=None, user=None):
-    url = 'repos/%s/%s/forks' % (
-      self.client.username(user), repo)
+    query = None
     if sort:
-      url += '?%s' % urllib.urlencode({'sort': sort})
-    return self.client.get(url, RepoListResponse)
+      query = {'sort': sort}
+    return self.client.get('repos/%s/%s/forks' % (
+      self.client.user(user), repo), query=query, msg_type=RepoListResponse)
 
   def create_fork(self, repo, org=None, user=None):
-    url = 'repos/%s/%s/forks' % (
-      self.client.username(user), repo)
+    query = None
     if org:
-      url += '?%s' % urllib.urlencode({'org': org})
-    return self.client.post(url)
+      query = {'org': org}
+    return self.client.post('repos/%s/%s/forks' % (
+      self.client.user(user), repo), query=query)
