@@ -210,11 +210,15 @@ class HookCommit(msgs.Message):
   after = msgs.StringField(2)
   # refs/heads/master
   ref = msgs.StringField(3)
-  commits = msgs.MessageField('GitCommit', 4)
-  repository = msgs.MessageField('Repo', 5)
-  head_commit = msgs.MessageField('GitCommit', 6)
+  pusher = msgs.MessageField('HookUser', 4)
+  commits = msgs.MessageField('GitCommit', 5)
+  repository = msgs.MessageField('Repo', 6)
+  head_commit = msgs.MessageField('GitCommit', 7)
   # https://github.com/:user/:repo/compare/27766a14cfc5...36ddb3e3047b
-  compare = msgs.StringField(7)
-  forced = msgs.BooleanField(8, default=False)
-  deleted = msgs.BooleanField(9, default=False)
-  created = msgs.BooleanField(10, default=False)
+  compare = msgs.StringField(8)
+  forced = msgs.BooleanField(9, default=False)
+  deleted = msgs.BooleanField(10, default=False)
+  created = msgs.BooleanField(11, default=False)
+
+class HookUser(msgs.Message):
+  name = msgs.StringField(1)
