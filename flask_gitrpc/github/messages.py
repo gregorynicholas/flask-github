@@ -188,12 +188,18 @@ class PullReviewComment(msgs.Message):
   commit_message = msgs.StringField(1)
 
 class RepoHook(msgs.Message):
-  name = msgs.StringField(1)
-  config = msgs.StringField(2)
-  events = msgs.StringField(3)
+  id = msgs.IntegerField(1, default=0)
+  name = msgs.StringField(2)
+  events = msgs.StringField(3, repeated=True)
   add_events = msgs.BooleanField(4, default=True)
   remove_events = msgs.BooleanField(5, default=True)
   active = msgs.BooleanField(6, default=True)
+  config = msgs.MessageField('RepoHookConfig', 7)
+
+class RepoHookConfig(msgs.Message):
+  url = msgs.StringField(1)
+  insecure_ssl = msgs.StringField(2)
+  content_type = msgs.StringField(3)
 
 class CommitHookPayload(msgs.Message):
   before = msgs.StringField(1)

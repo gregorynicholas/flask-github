@@ -61,16 +61,16 @@ class GitRpc:
       headers={'Accept': 'application/json'},
       token=self.access_token)
     if result.status == 401:
-      raise exceptions.NotFound('''Error with Github api request:
+      raise exceptions.Unauthorized('''Error with Github api request:
         401, user is not authorized.''')
     elif result.status == 403:
-      raise exceptions.NotFound('''Error with Github api request:
+      raise exceptions.MethodNotAllowed('''Error with Github api request:
         403, user is authenticated, but doesn't have permissions.''')
     elif result.status == 404:
       raise exceptions.NotFound('''Error with Github api request:
-        404, data not found.''')
+        404, data not found: %s''' % result.data)
     elif result.status > 299:
-      raise exceptions.NotFound(
+      raise exceptions.BadRequest(
         'Error with github api request: %s, %s' % (result.status, result.data))
     return result.data
 
