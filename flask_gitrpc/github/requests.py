@@ -88,5 +88,5 @@ class PullRequestListResponse(msgs.Message):
 class OrgListResponse(msgs.Message):
   response = msgs.MessageField('Org', 1, repeated=True)
 
-class HookPushResponse(msgs.Message):
-  response = msgs.MessageField('HookCommit', 1)
+class HookPushPayload(msgs.Message):
+  payload = msgs.MessageField('HookCommit', 1)
