@@ -201,13 +201,20 @@ class RepoHookConfig(msgs.Message):
   insecure_ssl = msgs.StringField(2)
   content_type = msgs.StringField(3)
 
-class CommitHookPayload(msgs.Message):
-  before = msgs.StringField(1)
-  after = msgs.StringField(2)
-  ref = msgs.StringField(3)
-  commits = msgs.MessageField('GitCommit', 4)
-  repository = msgs.MessageField('Repo', 5)
-
 class Key(msgs.Message):
   title = msgs.StringField(1)
   key = msgs.StringField(2)
+
+class HookCommit(msgs.Message):
+  before = msgs.StringField(1)
+  after = msgs.StringField(2)
+  # refs/heads/master
+  ref = msgs.StringField(3)
+  commits = msgs.MessageField('GitCommit', 4)
+  repository = msgs.MessageField('Repo', 5)
+  head_commit = msgs.MessageField('GitCommit', 6)
+  # https://github.com/:user/:repo/compare/27766a14cfc5...36ddb3e3047b
+  compare = msgs.StringField(7)
+  forced = msgs.BooleanField(8, default=False)
+  deleted = msgs.BooleanField(9, default=False)
+  created = msgs.BooleanField(10, default=False)
