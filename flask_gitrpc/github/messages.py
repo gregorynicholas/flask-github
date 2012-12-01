@@ -193,7 +193,7 @@ class RepoHook(msgs.Message):
   events = msgs.StringField(3, repeated=True)
   add_events = msgs.StringField(4, repeated=True)
   remove_events = msgs.StringField(5, repeated=True)
-  active = msgs.StringField(6, repeated=True)
+  active = msgs.BooleanField(6, default=True)
   config = msgs.MessageField('RepoHookConfig', 7)
 
 class RepoHookConfig(msgs.Message):
