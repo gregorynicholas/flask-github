@@ -27,8 +27,8 @@ class ReposHooks:
       'repos/%s/%s/hooks' % (
         self.client.user(user), repo), msg)
 
-  def edit_hook(self, repo, id, name, config, events=None, add_events=None,
-      remove_events=None, active=True, user=None):
+  def edit_hook(self, repo, id, name=None, config=None, events=None,
+      add_events=None, remove_events=None, active=True, user=None):
     msg = RepoHook(
       name=name,
       config=config,
