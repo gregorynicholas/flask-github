@@ -32,10 +32,10 @@ class ReposHooks:
     msg = RepoHook(
       name=name,
       config=config,
-      events=events,
       active=active,
-      add_events=add_events,
-      remove_events=remove_events)
+      events=events or [],
+      add_events=add_events or [],
+      remove_events=remove_events or [])
     return self.client.patch(
       'repos/%s/%s/hooks/%s' % (
         self.client.user(user), repo, id), msg)
