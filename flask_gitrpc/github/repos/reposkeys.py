@@ -20,7 +20,7 @@ class ReposKeys:
       key=key)
     return self.client.post(
       'repos/%s/%s/keys' % (
-        self.client.user(user), repo), msg)
+        self.client.user(user), repo), data=msg)
 
   def edit_key(self, repo, id, title=None, key=None, user=None):
     msg = Key(
@@ -28,7 +28,7 @@ class ReposKeys:
       key=key)
     return self.client.patch(
       'repos/%s/%s/keys/%s' % (
-        self.client.user(user), repo, id), msg)
+        self.client.user(user), repo, id), data=msg)
 
   def delete_key(self, repo, id, user=None):
     return self.client.delete(

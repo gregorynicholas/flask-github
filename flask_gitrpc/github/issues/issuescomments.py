@@ -20,7 +20,7 @@ class IssuesComments:
       'body': body
     }
     return self.client.patch('repos/%s/%s/issues/comments/%s' % (
-      self.client.user(user), repo, id), msg)
+      self.client.user(user), repo, id), data=msg)
 
   def delete_comment(self, repo, id, user=None):
     return self.client.delete('repos/%s/%s/issues/comments/%s' % (

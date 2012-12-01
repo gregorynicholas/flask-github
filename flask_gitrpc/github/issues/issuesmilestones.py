@@ -25,7 +25,7 @@ class IssuesMilestones:
       'due_on': due_on
     }
     return self.client.post('repos/%s/%s/milestones' % (
-      repo, self.client.user(user)), msg)
+      repo, self.client.user(user)), data=msg)
 
   def update_milestone(self, repo, number, title, state=None, description=None,
       due_on=None, user=None):
@@ -36,7 +36,7 @@ class IssuesMilestones:
       'due_on': due_on
     }
     return self.client.patch('repos/%s/%s/milestones/%s' % (
-      repo, self.client.user(user), number), msg)
+      repo, self.client.user(user), number), data=msg)
 
   def delete_milestone(self, repo, number, user=None):
     return self.client.delete('repos/%s/%s/milestones/%s' % (

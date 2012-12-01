@@ -17,7 +17,7 @@ class IssuesLabels:
       'color': color
     }
     return self.client.post('repos/%s/%s/labels' % (
-      repo, self.client.user(user)), msg)
+      repo, self.client.user(user)), data=msg)
 
   def edit_label(self, repo, id, name, color, user=None):
     msg = {
@@ -25,7 +25,7 @@ class IssuesLabels:
       'color': color
     }
     return self.client.patch('repos/%s/%s/labels/%s' % (
-      repo, self.client.user(user), id), msg)
+      repo, self.client.user(user), id), data=msg)
 
   def delete_label(self, repo, id, user=None):
     return self.client.delete('repos/%s/%s/labels/%s' % (
@@ -38,7 +38,7 @@ class IssuesLabels:
   def add_issue_label(self, repo, id, labels, user=None):
     msg = labels
     return self.client.post('repos/%s/%s/issues/%s/labels' % (
-      repo, self.client.user(user), id), msg)
+      repo, self.client.user(user), id), data=msg)
 
   def delete_issue_label(self, repo, issue_id, label_id, user=None):
     return self.client.delete(url = 'repos/%s/%s/issues/%s/labels/%s' % (
@@ -47,7 +47,7 @@ class IssuesLabels:
   def replace_issue_labels(self, repo, id, labels, user=None):
     msg = labels
     return self.client.put('repos/%s/%s/issues/%s/labels' % (
-      repo, self.client.user(user), id), msg)
+      repo, self.client.user(user), id), data=msg)
 
   def remove_issue_labels(self, repo, id, user=None):
     return self.client.delete('repos/%s/%s/issues/%s/labels' % (
