@@ -16,14 +16,14 @@ class GistsComments:
       'body': body
     }
     return self.client.post(
-      'gists/%s/comments' % id, msg)
+      'gists/%s/comments' % id, data=msg)
 
   def edit_gist_comment(self, id, body):
     msg = {
       'body': body
     }
     return self.client.patch(
-      'gists/comments/%s' % id, msg)
+      'gists/comments/%s' % id, data=msg)
 
   def delete_gist_comment(self, id):
     return self.client.delete(

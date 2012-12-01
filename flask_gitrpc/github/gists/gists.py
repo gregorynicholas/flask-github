@@ -22,14 +22,14 @@ class Gists:
       'public': public,
       'files': files
     }
-    return self.client.post('gists', msg)
+    return self.client.post('gists', data=msg)
 
   def edit_gist(self, id, files=None, description=None):
     msg = {
       'description': description,
       'files': files
     }
-    return self.client.patch('gists/%s' % id, msg)
+    return self.client.patch('gists/%s' % id, data=msg)
 
   def star_gist(self, id):
     return self.client.put('gists/%s/star' % id)

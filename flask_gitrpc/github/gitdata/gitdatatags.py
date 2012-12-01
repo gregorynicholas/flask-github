@@ -25,4 +25,4 @@ class GitDataTags:
       date=tagger_date)
     return self.github.post(
       'repos/%s/%s/git/tags' % (
-        self.client.user(user), repo), msg, msg_type=TagResponse)
+        self.client.user(user), repo), data=msg, msg_type=TagResponse)

@@ -27,4 +27,4 @@ class Orgs:
       email=email,
       location=location,
       name=name)
-    return self.client.patch('org/%s' % login, msg)
+    return self.client.patch('org/%s' % login, data=msg)

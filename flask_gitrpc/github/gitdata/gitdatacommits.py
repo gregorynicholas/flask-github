@@ -13,8 +13,8 @@ class GitDataCommits:
         self.client.user(user), repo, sha), msg_type=GitDataCommitListResponse)
 
   def create_commit(self, repo, message, tree, parents, author_name=None,
-    author_email=None, author_date=None, committer_name=None,
-    committer_email=None, commiter_date=None, user=None):
+      author_email=None, author_date=None, committer_name=None,
+      committer_email=None, commiter_date=None, user=None):
     msg = RepoCommit(
       message=message,
       parents=parents,
@@ -29,4 +29,4 @@ class GitDataCommits:
         date=commiter_date))
     return self.client.post(
       'repos/%s/%s/git/commits' % (
-        self.client.user(user), repo), msg, msg_type=GitDataCommitResponse)
+        self.client.user(user), repo), data=msg, msg_type=GitDataCommitResponse)

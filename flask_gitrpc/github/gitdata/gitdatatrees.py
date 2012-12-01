@@ -7,11 +7,11 @@ class GitDataTrees:
     self.client = client
 
   def get_tree(self, repo, sha, recursive=False, user=None):
-    url = 'repos/%s/%s/git/trees/%s' % (self.client.user(user), repo, sha)
     query = None
     if recursive:
       query = {'recursive': '1'}
-    return self.client.get(url, query=query, msg_type=TreeListResponse)
+    return self.client.get('repos/%s/%s/git/trees/%s' % (
+      self.client.user(user), repo, sha), query=query, msg_type=TreeListResponse)
 
   def create_tree(self, repo, tree, base_tree=None, user=None):
     msg = Tree(
@@ -19,4 +19,4 @@ class GitDataTrees:
       tree=tree)
     return self.client.post(
       'repos/%s/%s/git/trees' % (
-        self.client.user(user), repo), msg, msg_type=TreeResponse)
+        self.client.user(user), repo), data=msg, msg_type=TreeResponse)

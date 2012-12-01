@@ -25,7 +25,7 @@ class PullReviewComments:
       position=position)
     return self.client.post(
       'repos/%s/%s/pulls/%s/comments' % (
-        self.client.user(user), repo, id), msg)
+        self.client.user(user), repo, id), data=msg)
 
   def create_comment_response(self, repo, id, body, in_reply_to, user=None):
     msg = PullReviewComment(
@@ -33,14 +33,14 @@ class PullReviewComments:
       in_reply_to=in_reply_to)
     return self.client.post(
       'repos/%s/%s/pulls/%s/comments' % (
-        self.client.user(user), repo, id), msg)
+        self.client.user(user), repo, id), data=msg)
 
   def edit_comment(self, repo, id, body, user=None):
     msg = PullReviewComment(
       body=body)
     return self.client.patch(
       'repos/%s/%s/pulls/comments/%s' % (
-        self.client.user(user), repo, id), msg)
+        self.client.user(user), repo, id), data=msg)
 
   def delete_comment(self, repo, id, user=None):
     return self.client.delete(

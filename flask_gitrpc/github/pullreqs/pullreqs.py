@@ -29,7 +29,7 @@ class PullRequests:
       body=body)
     return self.client.post(
       'repos/%s/%s/pulls' % (
-        self.client.user(user), repo), msg)
+        self.client.user(user), repo), data=msg)
 
   def create_pull_request_from_issue(self, repo, issue, base, head, user=None):
     msg = PullRequest(
@@ -38,7 +38,7 @@ class PullRequests:
       head=head)
     return self.client.post(
       'repos/%s/%s/pulls' % (
-        self.client.user(user), repo), msg)
+        self.client.user(user), repo), data=msg)
 
   def list_pull_request_commits(self, repo, id, user=None):
     return self.client.get(
@@ -61,7 +61,7 @@ class PullRequests:
         commit_message=commit_message)
       return self.client.put(
         'repos/%s/%s/pulls/%s/merge' % (
-          self.client.user(user), repo, id), msg)
+          self.client.user(user), repo, id), data=msg)
     else:
       return self.client.put(
         'repos/%s/%s/pulls/%s/merge' % (

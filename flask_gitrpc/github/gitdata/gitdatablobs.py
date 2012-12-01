@@ -16,4 +16,4 @@ class GitDataBlobs:
       encoding=encoding)
     return self.client.post(
       'repos/%s/%s/git/blobs' % (
-        self.client.user(user), repo), msg, msg_type=GitDataBlobResponse)
+        self.client.user(user), repo), data=msg, msg_type=GitDataBlobResponse)

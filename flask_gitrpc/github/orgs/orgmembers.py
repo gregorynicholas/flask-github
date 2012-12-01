@@ -11,7 +11,8 @@ class OrgMembers:
 
   def get_member(self, org, user=None):
     return self.client.get(
-      'orgs/%s/members/%s' % (org, self.client.user(user)), msg_type=UserResponse)
+      'orgs/%s/members/%s' % (
+        org, self.client.user(user)), msg_type=UserResponse)
 
   def remove_member(self, org, user):
     return self.client.delete(
@@ -23,7 +24,8 @@ class OrgMembers:
 
   def get_if_user_is_public(self, org, user):
     return self.client.get(
-      'orgs/%s/public_members/%s' % (org, self.client.user(user)), msg_type=UserResponse)
+      'orgs/%s/public_members/%s' % (
+        org, self.client.user(user)), msg_type=UserResponse)
 
   def publicize_user(self, org, user):
     return self.client.put(

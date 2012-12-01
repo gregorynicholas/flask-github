@@ -19,14 +19,14 @@ class UsersKeys:
       title=title,
       key=key)
     return self.client.post(
-      'user/keys', msg)
+      'user/keys', data=msg)
 
   def update_public_key(self, id, title, key):
     msg = Key(
       title=title,
       key=key)
     return self.client.patch(
-      'user/keys/%s' % id, msg)
+      'user/keys/%s' % id, data=msg)
 
   def delete_public_key(self, id):
     return self.client.delete(

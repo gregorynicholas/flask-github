@@ -10,8 +10,8 @@ class UsersEmails:
 
   def add_emails(self, emails):
     return self.client.post(
-      'user/emails', dumps(emails))
+      'user/emails', data=dumps(emails))
 
   def delete_email(self, emails):
     return self.client.delete(
-      'user/emails', dumps(emails))
+      'user/emails', data=dumps(emails))

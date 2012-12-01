@@ -27,4 +27,4 @@ class Users:
       location=location,
       hireable=hireable,
       bio=bio)
-    return self.client.patch('user', msg)
+    return self.client.patch('user', data=msg)

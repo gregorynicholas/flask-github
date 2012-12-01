@@ -37,7 +37,7 @@ class ReposCommits:
       position=position)
     return self.client.post(
       'repos/%s/%s/commits/%s/comments' % (
-        self.client.user(user), repo, sha), msg)
+        self.client.user(user), repo, sha), data=msg)
 
   def get_single_comment(self, repo, id, user=None):
     return self.client.get(
@@ -49,7 +49,7 @@ class ReposCommits:
       body=body)
     return self.client.post(
       'repos/%s/%s/comments/%s' % (
-        self.client.user(user), repo, id), msg)
+        self.client.user(user), repo, id), data=msg)
 
   def compare_commits(self, repo, base, head, user=None):
     return self.client.get(

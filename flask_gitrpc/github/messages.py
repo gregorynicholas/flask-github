@@ -76,6 +76,7 @@ class Repo(msgs.Message):
   id = msgs.IntegerField(29, default=0)
   ssh_url = msgs.StringField(30)
   mirror_url = msgs.StringField(31)
+  ref = msgs.StringField(32)
 
 
 class GitCommit(msgs.Message):

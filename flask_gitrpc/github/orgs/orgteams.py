@@ -21,13 +21,13 @@ class OrgTeams:
       name=name,
       repo_names=repo_names,
       permission=permission)
-    return self.client.post('orgs/%s/teams' % org, msg)
+    return self.client.post('orgs/%s/teams' % org, data=msg)
 
   def edit_team(self, id, name, permission=None):
     msg = Team(
       name=name,
       permission=permission)
-    return self.client.patch('teams/%s' % id, msg)
+    return self.client.patch('teams/%s' % id, data=msg)
 
   def delete_team(self, id):
     return self.client.delete(
@@ -35,11 +35,12 @@ class OrgTeams:
 
   def list_team_members(self, id):
     return self.client.get(
-      'teams/%s/members' % id, UserListResponse)
+      'teams/%s/members' % id, msg_type=UserListResponse)
 
   def get_team_member(self, id, user=None):
     return self.client.get(
-      'teams/%s/members/%s' % (id, self.client.user(user)), msg_type=UserResponse)
+      'teams/%s/members/%s' % (
+        id, self.client.user(user)), msg_type=UserResponse)
 
   def add_team_member(self, id, user):
     return self.client.put(
@@ -55,7 +56,8 @@ class OrgTeams:
 
   def get_team_repo(self, id, user, repo):
     return self.client.get(
-      'teams/%s/repos/%s/%s' % (id, self.client.user(user), repo), msg_type=RepoResponse)
+      'teams/%s/repos/%s/%s' % (
+        id, self.client.user(user), repo), msg_type=RepoResponse)
 
   def add_team_repo(self, id, user, repo):
     return self.client.put(

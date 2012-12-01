@@ -61,7 +61,7 @@ class Repos:
       description=description,
       homepage=homepage)
     return self.client.post(
-      'orgs/%s/repos' % org, msg, msg_type=RepoResponse)
+      'orgs/%s/repos' % org, data=msg, msg_type=RepoResponse)
 
   def get_repo(self, repo, user=None):
     return self.client.get(
@@ -80,7 +80,7 @@ class Repos:
       homepage=homepage)
     return self.client.patch(
       'repos/%s/%s' % (
-        self.client.user(user), repo), msg)
+        self.client.user(user), repo), data=msg)
 
   def list_contributors(self, repo, user=None):
     return self.client.get(
@@ -102,7 +102,7 @@ class Repos:
       'repos/%s/%s/teams' % (
         self.client.user(user), repo), msg_type=TeamListResponse)
 
-  def list_branches(self, repo, user=None ):
+  def list_branches(self, repo, user=None):
     return self.client.get(
       'repos/%s/%s/branches' % (
         self.client.user(user), repo))

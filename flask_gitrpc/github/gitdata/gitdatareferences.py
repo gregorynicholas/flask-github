@@ -26,7 +26,7 @@ class GitDataReferences:
       sha=sha)
     return self.client.post(
       'repos/%s/%s/git/refs' % (
-        self.client.user(user), repo), msg)
+        self.client.user(user), repo), data=msg)
 
   def edit_reference(self, repo, sha, force=False, user=None):
     msg = GitDataReference(
@@ -34,4 +34,4 @@ class GitDataReferences:
       sha=sha)
     return self.client.patch(
       'repos/%s/%s/git/refs' % (
-        self.client.user(user), repo), msg)
+        self.client.user(user), repo), data=msg)
