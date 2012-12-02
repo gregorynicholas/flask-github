@@ -98,7 +98,7 @@ class Commit(msgs.Message):
   added = msgs.StringField(15, repeated=True)
   removed = msgs.StringField(16, repeated=True)
   modified = msgs.StringField(17, repeated=True)
-  commit = msgs.MessageField('Commit', 5)
+  commit = msgs.MessageField('Commit', 18)
 
 class Tree(msgs.Message):
   url = msgs.StringField(1)

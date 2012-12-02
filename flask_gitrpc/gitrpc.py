@@ -4,8 +4,6 @@ from urllib import urlencode
 from datetime import datetime, timedelta
 from flask_protorpc.proto import message_from_json, message_to_json
 from werkzeug import exceptions
-from github import messages
-from github import requests
 from github.orgs import orgs
 from github.repos import repos
 from github.users import users
@@ -14,7 +12,7 @@ from github.issues import issues
 from github.gitdata import gitdata
 from github.pullreqs import pullreqs
 
-__all__ = ['GitRpc', 'messages', 'requests']
+__all__ = ['GitRpc']
 
 class GitRpc:
   def __init__(self, app, config, access_token, username=None, password=None):
@@ -58,15 +56,20 @@ class GitRpc:
         'Invalid HTTP Method. Use: HEAD, GET, POST, PATCH, PUT, DELETE')
 
   def call(self, path=None, query=None, data=None, method='GET'):
-    result = self.app.request(self._url(path, query),
-      method=method,
-      data=data,
-      content_type='application/json',
-      headers={'Accept': 'application/json'},
-      token=self.access_token)
+    try:
+      result = self.app.request(self._url(path, query),
+        method=method,
+        data=data,
+        content_type='application/json',
+        headers={'Accept': 'application/json'},
+        token=self.access_token)
+      print 'RESULT: %s' % result.data
+    except:
+      import traceback
+      print traceback.format_exc()
     if result.status == 401:
       raise exceptions.Unauthorized('''Error with Github api request:
-        401, user is not authorized.''')
+        401, user is not authorized: %s.''' % result.data)
     elif result.status == 403:
       raise exceptions.MethodNotAllowed('''Error with Github api request:
         403, user is authenticated, but doesn't have permissions.''')
@@ -107,7 +110,7 @@ class GitRpc:
     params = {}
     if query and isinstance(query, dict):
       params.update(query)
-    path += '?%s' % urlencode(params)
+      path += '?%s' % urlencode(params)
     print 'api request url path: %s' % path
     return path
 

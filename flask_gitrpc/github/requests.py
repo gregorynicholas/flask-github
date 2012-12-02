@@ -16,8 +16,8 @@ class HookListResponse(msgs.Message):
 class CommitResponse(msgs.Message):
   response = msgs.MessageField('Commit', 1)
 
-class CommitResponse(msgs.Message):
-  response = msgs.MessageField('Commit', 1)
+class CommitListResponse(msgs.Message):
+  response = msgs.MessageField('Commit', 1, repeated=True)
 
 class CommentResponse(msgs.Message):
   response = msgs.MessageField('Comment', 1)
