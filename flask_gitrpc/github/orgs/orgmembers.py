@@ -5,32 +5,27 @@ class OrgMembers:
   def __init__(self, client):
     self.client = client
 
-  def list_members(self, org):
-    return self.client.get(
-      'orgs/%s/members' % org, msg_type=UserListResponse)
+  def list(self, org, public_only=False):
+    url = 'orgs/%s/members' % org
+    if public_only:
+      url = 'orgs/%s/public_members' % org
+    return self.client.get(url, msg_type=UserListResponse)
 
-  def get_member(self, org, user=None):
-    return self.client.get(
-      'orgs/%s/members/%s' % (
-        org, self.client.user(user)), msg_type=UserResponse)
+  def get(self, org, user=None, public_only=False):
+    url = 'orgs/%s/members/%s' % (org, self.client.user(user))
+    if public_only:
+      url = 'orgs/%s/public_members/%s' % (
+        org, self.client.user(user))
+    return self.client.get(url, msg_type=UserResponse)
 
-  def remove_member(self, org, user):
+  def remove(self, org, user):
     return self.client.delete(
       'orgs/%s/members/%s' % (org, self.client.user(user)))
 
-  def list_public_members(self, org):
-    return self.client.get(
-      'orgs/%s/public_members' % org, msg_type=UserListResponse)
-
-  def get_if_user_is_public(self, org, user):
-    return self.client.get(
-      'orgs/%s/public_members/%s' % (
-        org, self.client.user(user)), msg_type=UserResponse)
-
-  def publicize_user(self, org, user):
+  def make_public(self, org, user):
     return self.client.put(
       'orgs/%s/public_members/%s' % (org, self.client.user(user)))
 
-  def conceal_user(self, org, user):
+  def make_private(self, org, user):
     return self.client.delete(
       'orgs/%s/public_members/%s' % (org, self.client.user(user)))

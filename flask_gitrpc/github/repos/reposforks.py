@@ -1,18 +1,17 @@
-import urllib
 from ..requests import RepoListResponse
 
 class ReposForks:
   def __init__(self, client):
     self.client = client
 
-  def list_forks(self, repo, sort=None, user=None):
+  def list(self, repo, sort=None, user=None):
     query = None
     if sort:
       query = {'sort': sort}
     return self.client.get('repos/%s/%s/forks' % (
       self.client.user(user), repo), query=query, msg_type=RepoListResponse)
 
-  def create_fork(self, repo, org=None, user=None):
+  def create(self, repo, org=None, user=None):
     query = None
     if org:
       query = {'org': org}

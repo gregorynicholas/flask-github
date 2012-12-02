@@ -10,17 +10,17 @@ class ReposCollaborators:
       'repos/%s/%s/collaborators' % (
         self.client.user(user), repo), msg_type=UserListResponse)
 
-  def get(self, repo, collaborator, user=None):
+  def get(self, repo, collaborator, owner=None):
     return self.client.get(
       'repos/%s/%s/collaborators/%s' % (
-        self.client.user(user), repo, collaborator), msg_type=UserResponse)
+        self.client.user(owner), repo, collaborator), msg_type=UserResponse)
 
-  def add(self, repo, collaborator, user=None):
+  def add(self, repo, collaborator, owner=None):
     return self.client.put(
       'repos/%s/%s/collaborators/%s' % (
-        self.client.user(user), repo, collaborator), msg_type=UserResponse)
+        self.client.user(owner), repo, collaborator), msg_type=UserResponse)
 
-  def delete(self, repo, collaborator, user=None):
+  def delete(self, repo, collaborator, owner=None):
     return self.client.delete(
       'repos/%s/%s/collaborators/%s' % (
-        self.client.user(user), repo, collaborator))
+        self.client.user(owner), repo, collaborator))

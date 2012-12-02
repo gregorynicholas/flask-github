@@ -3,8 +3,7 @@ class IssuesMilestones:
   def __init__(self, client):
     self.client = client
 
-  def list_repo_milestones(self, repo, state=None, sort=None, direction=None,
-      user=None):
+  def list(self, repo, state=None, sort=None, direction=None, user=None):
     query = {
       'state': state,
       'sort': sort,
@@ -12,11 +11,11 @@ class IssuesMilestones:
     return self.client.get('repos/%s/%s/milestones' % (
       self.client.user(user), repo), query=query, msg_type=None)
 
-  def get_milestone(self, repo, number, user=None):
+  def get(self, repo, number, user=None):
     return self.client.get('repos/%s/%s/milestones/%s' % (
       repo, user, number), msg_type=None)
 
-  def create_milestone(self, repo, title, state=None, description=None,
+  def create(self, repo, title, state=None, description=None,
       due_on=None, user=None):
     msg = {
       'title': title,
@@ -27,7 +26,7 @@ class IssuesMilestones:
     return self.client.post('repos/%s/%s/milestones' % (
       repo, self.client.user(user)), data=msg)
 
-  def update_milestone(self, repo, number, title, state=None, description=None,
+  def update(self, repo, number, title, state=None, description=None,
       due_on=None, user=None):
     msg = {
       'title': title,
@@ -38,6 +37,6 @@ class IssuesMilestones:
     return self.client.patch('repos/%s/%s/milestones/%s' % (
       repo, self.client.user(user), number), data=msg)
 
-  def delete_milestone(self, repo, number, user=None):
+  def delete(self, repo, number, user=None):
     return self.client.delete('repos/%s/%s/milestones/%s' % (
       repo, self.client.user(user), number))

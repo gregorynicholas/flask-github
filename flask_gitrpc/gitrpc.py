@@ -1,8 +1,11 @@
 import logging
 from json import loads, dumps
 from urllib import urlencode
+from datetime import datetime, timedelta
 from flask_protorpc.proto import message_from_json, message_to_json
 from werkzeug import exceptions
+from github import messages
+from github import requests
 from github.orgs import orgs
 from github.repos import repos
 from github.users import users
@@ -11,6 +14,7 @@ from github.issues import issues
 from github.gitdata import gitdata
 from github.pullreqs import pullreqs
 
+__all__ = ['GitRpc', 'messages', 'requests']
 
 class GitRpc:
   def __init__(self, app, config, access_token, username=None, password=None):
@@ -141,3 +145,19 @@ class GitRpc:
 
   def password(self):
     return self._password
+
+  def to_dt(self, value):
+    '''Converts & returns a datetime object from an isoformat string.
+
+      :param value: An isoformat string. ex: 2012-10-15T18:37:04-07:00
+    '''
+    dt, _, us = value.partition('.')
+    dt = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
+    return dt + timedelta(microseconds=int(us.rstrip('Z'), 10))
+
+  def from_dt(self, value):
+    '''Returns an isoformat string from a datetime object.
+
+      :param value: Instance of a datetime.datetime object.
+    '''
+    return value.isoformat()

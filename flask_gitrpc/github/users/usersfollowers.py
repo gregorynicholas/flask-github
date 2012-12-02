@@ -14,14 +14,14 @@ class UsersFollowers:
       user is not None and user != self.client._username) else 'user/following'
     return self.client.get(url, msg_type=UserListResponse)
 
-  def check_if_following(self, user):
+  def is_following(self, user):
     return self.client.get(
       'user/following/%s' % user)
 
-  def follow_user(self, user):
+  def follow(self, user):
     return self.client.put(
       'user/following/%s' % user)
 
-  def unfollow_user(self, user):
+  def unfollow(self, user):
     return self.client.delete(
       'user/following/%s' % user)

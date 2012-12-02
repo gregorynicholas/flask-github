@@ -7,23 +7,29 @@ class RepoResponse(msgs.Message):
 class RepoListResponse(msgs.Message):
   response = msgs.MessageField('Repo', 1, repeated=True)
 
-class RepoHookResponse(msgs.Message):
-  response = msgs.MessageField('RepoHook', 1)
+class HookResponse(msgs.Message):
+  response = msgs.MessageField('Hook', 1)
 
-class RepoHookListResponse(msgs.Message):
-  response = msgs.MessageField('RepoHook', 1, repeated=True)
+class HookListResponse(msgs.Message):
+  response = msgs.MessageField('Hook', 1, repeated=True)
 
-class RepoCommitResponse(msgs.Message):
-  response = msgs.MessageField('RepoCommit', 1)
+class CommitResponse(msgs.Message):
+  response = msgs.MessageField('Commit', 1)
 
-class RepoCommitListResponse(msgs.Message):
-  response = msgs.MessageField('RepoCommit', 1, repeated=True)
+class CommitResponse(msgs.Message):
+  response = msgs.MessageField('Commit', 1)
+
+class CommentResponse(msgs.Message):
+  response = msgs.MessageField('Comment', 1)
+
+class CommentListResponse(msgs.Message):
+  response = msgs.MessageField('Comment', 1, repeated=True)
 
 class GitDataCommitResponse(msgs.Message):
-  response = msgs.MessageField('GitCommit', 1)
+  response = msgs.MessageField('Commit', 1)
 
 class GitDataCommitListResponse(msgs.Message):
-  response = msgs.MessageField('GitCommit', 1, repeated=True)
+  response = msgs.MessageField('Commit', 1, repeated=True)
 
 class TreeResponse(msgs.Message):
   response = msgs.MessageField('Tree', 1)
@@ -61,17 +67,17 @@ class UserResponse(msgs.Message):
 class UserListResponse(msgs.Message):
   response = msgs.MessageField('User', 1, repeated=True)
 
-class GitDataBlobResponse(msgs.Message):
+class BlobResponse(msgs.Message):
   response = msgs.MessageField('Blob', 1)
 
-class GitDataBlobListResponse(msgs.Message):
+class BlobListResponse(msgs.Message):
   response = msgs.MessageField('Blob', 1, repeated=True)
 
-class GitDataReferenceResponse(msgs.Message):
-  response = msgs.MessageField('GitDataReference', 1)
+class RefResponse(msgs.Message):
+  response = msgs.MessageField('Ref', 1)
 
-class GitDataReferenceListResponse(msgs.Message):
-  response = msgs.MessageField('GitDataReference', 1, repeated=True)
+class RefListResponse(msgs.Message):
+  response = msgs.MessageField('Ref', 1, repeated=True)
 
 class PullReviewCommentResponse(msgs.Message):
   response = msgs.MessageField('PullReviewComment', 1)
@@ -87,6 +93,24 @@ class PullRequestListResponse(msgs.Message):
 
 class OrgListResponse(msgs.Message):
   response = msgs.MessageField('Org', 1, repeated=True)
+
+class RepoDownloadResponse(msgs.Message):
+  response = msgs.MessageField('RepoDownload', 1)
+
+class RepoDownloadListResponse(msgs.Message):
+  response = msgs.MessageField('RepoDownload', 1, repeated=True)
+
+class EventResponse(msgs.Message):
+  response = msgs.MessageField('Event', 1)
+
+class EventListResponse(msgs.Message):
+  response = msgs.MessageField('Event', 1, repeated=True)
+
+class GistResponse(msgs.Message):
+  response = msgs.MessageField('Gist', 1)
+
+class GistListResponse(msgs.Message):
+  response = msgs.MessageField('Gist', 1, repeated=True)
 
 class HookPushPayload(msgs.Message):
   payload = msgs.MessageField('HookCommit', 1)

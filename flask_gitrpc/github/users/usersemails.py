@@ -4,14 +4,14 @@ class UsersEmails:
   def __init__(self, client):
     self.client = client
 
-  def list_emails(self):
+  def list(self):
     return self.client.get(
-      'user/emails', message_type=None)
+      'user/emails', msg_type=None)
 
-  def add_emails(self, emails):
+  def add(self, emails):
     return self.client.post(
-      'user/emails', data=dumps(emails))
+      'user/emails', data=dumps(emails), msg_type=None)
 
-  def delete_email(self, emails):
+  def delete(self, emails):
     return self.client.delete(
       'user/emails', data=dumps(emails))

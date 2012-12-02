@@ -7,11 +7,11 @@ class IssuesLabels:
     return self.client.get('repos/%s/%s/labels' % (
       repo, self.client.user(user)), msg_type=None)
 
-  def get_label(self, repo, id, user=None):
+  def get(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/labels/%s' % (
       repo, self.client.user(user), id), msg_type=None)
 
-  def create_label(self, repo, name, color, user=None):
+  def create(self, repo, name, color, user=None):
     msg = {
       'name': name,
       'color': color
@@ -19,7 +19,7 @@ class IssuesLabels:
     return self.client.post('repos/%s/%s/labels' % (
       repo, self.client.user(user)), data=msg)
 
-  def edit_label(self, repo, id, name, color, user=None):
+  def edit(self, repo, id, name, color, user=None):
     msg = {
       'name': name,
       'color': color
@@ -27,11 +27,11 @@ class IssuesLabels:
     return self.client.patch('repos/%s/%s/labels/%s' % (
       repo, self.client.user(user), id), data=msg)
 
-  def delete_label(self, repo, id, user=None):
+  def delete(self, repo, id, user=None):
     return self.client.delete('repos/%s/%s/labels/%s' % (
       repo, self.client.user(user), id))
 
-  def get_issue_labels(self, repo, id, user=None):
+  def list_issue_labels(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/issues/%s/labels' % (
       repo, self.client.user(user), id), msg_type=None)
 
@@ -53,6 +53,6 @@ class IssuesLabels:
     return self.client.delete('repos/%s/%s/issues/%s/labels' % (
       repo, self.client.user(user), id))
 
-  def get_issue_milestone_labels(self, repo, id, user=None):
+  def list_issue_milestone_labels(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/milestones/%s/labels' % (
       repo, self.client.user(user), id), msg_type=None)

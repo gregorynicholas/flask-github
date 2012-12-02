@@ -11,13 +11,13 @@ class Users:
     self.emails = UsersEmails(self.client)
     self.followers = UsersFollowers(self.client)
 
-  def get_user(self, user=None):
+  def get(self, user=None):
     url = 'user'
     if (user is not None and user != self.client._username):
       url = 'users/%s' % user
     return self.client.get(url, msg_type=UserResponse)
 
-  def update_user(self, name=None, email=None, blog=None, company=None,
+  def update(self, name=None, email=None, blog=None, company=None,
       location=None, hireable=False, bio=None):
     msg = User(
       name=name,
@@ -27,4 +27,7 @@ class Users:
       location=location,
       hireable=hireable,
       bio=bio)
+    return self._update(msg=msg)
+
+  def _update(self, msg):
     return self.client.patch('user', data=msg)

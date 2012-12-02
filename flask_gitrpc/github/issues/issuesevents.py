@@ -11,6 +11,6 @@ class IssuesEvents:
     return self.client.get('repos/%s/%s/issues/events' % (
       self.client.user(user), repo), msg_type=None)
 
-  def get_event(self, repo, id, user=None):
+  def get(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/issues/events/%s' % (
       self.client.user(user), repo, id), msg_type=None)

@@ -9,29 +9,31 @@ class PullRequests:
     self.client = client
     self.reviewcomments = PullReviewComments(self.client)
 
-  def list_pull_requests(self, repo, state=None, user=None):
+  def list(self, repo, state=None, user=None):
     query = None
     if state:
       query = {'state': state}
     return self.client.get('repos/%s/%s/pulls' % (self.client.user(user),
       repo), query=query, msg_type=PullRequestListResponse)
 
-  def get_pull_request(self, repo, id, user=None):
+  def get(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/pulls/%s' % (
         self.client.user(user), repo, id), msg_type=PullRequestResponse)
 
-  def create_pull_request(self, repo, title, base, head, body=None, user=None):
+  def create(self, repo, title, base, head, body=None, user=None):
     msg = PullRequest(
       title=title,
       base=base,
       head=head,
       body=body)
-    return self.client.post(
-      'repos/%s/%s/pulls' % (
-        self.client.user(user), repo), data=msg)
+    return self._create(repo=repo, msg=msg, user=user)
 
-  def create_pull_request_from_issue(self, repo, issue, base, head, user=None):
+  def _create(self, repo, msg, user=None):
+    return self.client.post(
+      'repos/%s/%s/pulls' % (self.client.user(user), repo), data=msg)
+
+  def create_from_issue(self, repo, issue, base, head, user=None):
     msg = PullRequest(
       issue=issue,
       base=base,
@@ -40,22 +42,22 @@ class PullRequests:
       'repos/%s/%s/pulls' % (
         self.client.user(user), repo), data=msg)
 
-  def list_pull_request_commits(self, repo, id, user=None):
+  def list_commits(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/pulls/%s/commits' % (
         self.client.user(user), repo, id), msg_type=None)
 
-  def list_pull_request_files(self, repo, id, user=None):
+  def list_files(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/pulls/%s/files' % (
         self.client.user(user), repo, id), msg_type=None)
 
-  def get_if_pull_request_merged(self, repo, id, user=None):
+  def get_if_merged(self, repo, id, user=None):
     return self.client.get(
       'repos/%s/%s/pulls/%s/merge' % (
         self.client.user(user), repo, id), msg_type=None)
 
-  def merge_pull_request(self, repo, id, commit_message=None, user=None):
+  def merge(self, repo, id, commit_message=None, user=None):
     if commit_message:
       msg = CommitMessage(
         commit_message=commit_message)

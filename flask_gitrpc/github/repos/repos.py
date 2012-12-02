@@ -27,13 +27,21 @@ class Repos:
     self.downloads = ReposDownloads(self.client)
     self.collaborators = ReposCollaborators(self.client)
 
-  def list_user_repos(self, user=None):
+  def list(self, org=None, user=None):
     url = 'user/repos'
-    if user and user != self.client._username:
-      url = 'users/%s/repos' % self.client.user(user)
+    if org:
+      url = 'orgs/%s/repos' % org
+    else:
+      if user and user != self.client._username:
+        url = 'users/%s/repos' % self.client.user(user)
     return self.client.get(url, msg_type=RepoListResponse)
 
-  def create_user_repo(self, name, description=None, homepage=None,
+  def get(self, repo, user=None):
+    return self.client.get(
+      'repos/%s/%s' % (
+        self.client.user(user), repo), msg_type=RepoResponse)
+
+  def create(self, name, org=None, description=None, homepage=None,
        private=False, has_issues=True, has_wiki=True, has_downloads=True):
     msg = Repo(
       name=name,
@@ -43,32 +51,16 @@ class Repos:
       has_downloads=has_downloads,
       description=description,
       homepage=homepage)
+    return self._create(org=org, msg=msg)
+
+  def _create(self, msg, org=None):
+    url = 'user/repos'
+    if org:
+      url = 'orgs/%s/repos' % org
     return self.client.post(
-      'user/repos', msg, msg_type=RepoResponse)
+      url, data=msg, msg_type=RepoResponse)
 
-  def list_org_repos(self, org):
-    return self.client.get(
-      'orgs/%s/repos' % org, msg_type=RepoListResponse)
-
-  def create_org_repo(self, org, name, description=None, homepage=None,
-      private=False, has_issues=True, has_wiki=True, has_downloads=True):
-    msg = Repo(
-      name=name,
-      private=private,
-      has_issues=has_issues,
-      has_wiki=has_wiki,
-      has_downloads=has_downloads,
-      description=description,
-      homepage=homepage)
-    return self.client.post(
-      'orgs/%s/repos' % org, data=msg, msg_type=RepoResponse)
-
-  def get_repo(self, repo, user=None):
-    return self.client.get(
-      'repos/%s/%s' % (
-        self.client.user(user), repo), msg_type=RepoResponse)
-
-  def edit_repo(self, repo, name, description=None, homepage=None, private=False,
+  def edit(self, repo, name, description=None, homepage=None, private=False,
       has_issues=True, has_wiki=True, has_downloads=True, user=None):
     msg = Repo(
       name=name,
@@ -78,6 +70,9 @@ class Repos:
       has_downloads=has_downloads,
       description=description,
       homepage=homepage)
+    return self._edit(repo=repo, msg=msg, user=user)
+
+  def _edit(self, repo, msg, user=None):
     return self.client.patch(
       'repos/%s/%s' % (
         self.client.user(user), repo), data=msg)

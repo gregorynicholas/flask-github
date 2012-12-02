@@ -6,28 +6,34 @@ class UsersKeys:
   def __init__(self, client):
     self.client = client
 
-  def list_public_keys(self):
+  def list(self):
     return self.client.get(
       'user/keys', msg_type=KeyListResponse)
 
-  def get_public_key(self, id):
+  def get(self, id):
     return self.client.get(
       'user/keys/%s' % id, msg_type=KeyResponse)
 
-  def create_public_key(self, title, key):
+  def create(self, title, key):
     msg = Key(
       title=title,
       key=key)
+    return self._create(msg=msg)
+
+  def _create(self, msg):
     return self.client.post(
       'user/keys', data=msg)
 
-  def update_public_key(self, id, title, key):
+  def edit(self, id, title, key):
     msg = Key(
       title=title,
       key=key)
+    return self._edit(msg=msg)
+
+  def _edit(self, msg):
     return self.client.patch(
       'user/keys/%s' % id, data=msg)
 
-  def delete_public_key(self, id):
+  def delete(self, id):
     return self.client.delete(
       'user/keys/%s' % id)

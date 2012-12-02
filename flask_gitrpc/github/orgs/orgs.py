@@ -10,16 +10,16 @@ class Orgs:
     self.teams = OrgTeams(self.client)
     self.members = OrgMembers(self.client)
 
-  def list_orgs(self, user=None):
+  def list(self, user=None):
     url = 'user/orgs'
     if user and user != self.client._username:
       url = 'users/%s/orgs' % self.client.user(user)
     return self.client.get(url, msg_type=OrgListResponse)
 
-  def get_org(self, login):
-    return self.client.get('orgs/%s' % login, msg_type=UserResponse)
+  def get(self, org):
+    return self.client.get('orgs/%s' % org, msg_type=UserResponse)
 
-  def edit_org(self, login, billing_email=None, company=None, email=None,
+  def edit(self, org, billing_email=None, company=None, email=None,
       location=None, name=None):
     msg = Org(
       billing_email=billing_email,
@@ -27,4 +27,7 @@ class Orgs:
       email=email,
       location=location,
       name=name)
-    return self.client.patch('org/%s' % login, data=msg)
+    return self._edit(org=org, msg=msg)
+
+  def _edit(self, org, msg):
+    return self.client.patch('org/%s' % org, data=msg)
