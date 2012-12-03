@@ -3,6 +3,10 @@ from issueslabels import IssuesLabels
 from issuescomments import IssuesComments
 from issuesmilestones import IssuesMilestones
 
+from ..messages import Issue
+from ..requests import IssueResponse
+from ..requests import IssueListResponse
+
 class Issues:
   def __init__(self, client):
     self.client = client
@@ -21,7 +25,7 @@ class Issues:
       'direction': direction,
       'since': since
     }
-    return self.client.get('issues', query=query, msg_type=None)
+    return self.client.get('issues', query=query, msg_type=IssueListResponse)
 
   def list_repo_issues(self, repo, milestone=None, assignee=None,
     mentioned=None, state='open', labels=None, sort='created', direction='desc',
@@ -37,35 +41,39 @@ class Issues:
       'milestone': milestone
     }
     return self.client.get('repos/%s/%s/issues' % (
-      self.client.user(user), repo), query=query, msg_type=None)
+      self.client.user(user), repo), query=query, msg_type=IssueListResponse)
 
-  def get_issue(self, repo, number, user=None):
+  def get(self, repo, number, user=None):
     return self.client.get(
       'repos/%s/%s/issues/%s' % (
-        self.client.user(user), repo, number), msg_type=None)
+        self.client.user(user), repo, number), msg_type=IssueResponse)
 
-  def create_issue(self, repo, title, body=None, assignee=None,
+  def create(self, repo, title, body=None, assignee=None,
       milestone=None, labels=None, user=None):
-    msg = {
-      'title': title,
-      'body': body,
-      'assignee': assignee,
-      'milestone': milestone,
-      'labels': labels
-    }
-    return self.client.post('repos/%s/%s/issues' % (
-      self.client.user(user), repo), msg)
+    msg = Issue(
+      title=title,
+      body=body,
+      assignee=assignee,
+      milestone=milestone,
+      labels=labels)
+    return self._create(repo=repo, msg=msg, user=user)
 
-  def edit_issue(self, repo, id, title=None, body=None, assignee=None,
+  def _create(self, repo, msg, user=None):
+    return self.client.post('repos/%s/%s/issues' % (
+      self.client.user(user), repo), data=msg, msg_type=IssueResponse)
+
+  def edit(self, repo, id, title=None, body=None, assignee=None,
       state=None, milestone=None, labels=None, user=None):
-    msg = {
-      'title': title,
-      'body': body,
-      'assignee': assignee,
-      'state': state,
-      'milestone': milestone,
-      'labels': labels
-    }
+    msg = Issue(
+      title=title,
+      body=body,
+      assignee=assignee,
+      state=state,
+      milestone=milestone,
+      labels=labels)
+    return self._edit(repo=repo, id=id, msg=msg, user=user)
+
+  def _edit(self, repo, id, msg, user=None):
     return self.client.post(
       'repos/%s/%s/issues/%s' % (
-        self.client.user(user), repo, id), msg)
+        self.client.user(user), repo, id), data=msg)

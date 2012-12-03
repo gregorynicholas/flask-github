@@ -1,6 +1,7 @@
 import logging
-from json import loads, dumps
+from json import dumps
 from urllib import urlencode
+from urllib2 import Request, urlopen
 from datetime import datetime, timedelta
 from flask_protorpc.proto import message_from_json, message_to_json
 from werkzeug import exceptions
@@ -56,30 +57,66 @@ class GitRpc:
         'Invalid HTTP Method. Use: HEAD, GET, POST, PATCH, PUT, DELETE')
 
   def call(self, path=None, query=None, data=None, method='GET'):
+    # this avoids the request being sent as a GET when there is no data..
+    if method == 'POST' and (data is None or len(data) < 1):
+      data = '{}'
+    result = '{}'
+    status = 200
+    request = Request(self._url(self.app.base_url + path, query),
+      data=data, headers={
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer ' + self.access_token})
+    rate_limit = 0
+    rate_limit_remaining = 0
+    user_scopes = []
+    accepted_scopes = []
     try:
-      result = self.app.request(self._url(path, query),
-        method=method,
-        data=data,
-        content_type='application/json',
-        headers={'Accept': 'application/json'},
-        token=self.access_token)
-      print 'RESULT: %s' % result.data
+      response = urlopen(request)
+      result = response.read()
+      response.close()
+      status = response.code
+      # parse info from github api response headers..
+      rate_limit = int(response.headers.dict.get(
+        'x-ratelimit-limit', 0))
+      rate_limit_remaining = int(response.headers.dict.get(
+        'x-ratelimit-remaining', 0))
+      user_scopes = response.headers.dict.get(
+        'x-oauth-scopes', '').split(',')
+      accepted_scopes = response.headers.dict.get(
+        'x-accepted-oauth-scopes', '').split(',')
+      print 'rate_limit: %s' % (rate_limit)
+      print 'rate_limit_remaining: %s' % (rate_limit_remaining)
+      print 'user_scopes: %s' % (user_scopes)
+      print 'accepted_scopes: %s' % (accepted_scopes)
     except:
       import traceback
-      print traceback.format_exc()
-    if result.status == 401:
+      print 'HttpError: %s' % traceback.format_exc()
+
+    # response = self.app.request(self._url(path, query),
+    #   method=method, data=data, content_type='application/json',
+    #   headers={
+    #     'Accept': 'application/json',
+    #     'Authorization': self.access_token},
+    #   token=self.access_token)
+    # result = dumps({'response': response.data})
+    # todo: i need a root node.. i don't knot if i can serialize anonymous
+    # root lists.. so i'm serializing, adding root node, then encoding back
+    # to a json str.. sorry for the waste.
+    # status = response.status
+
+    if status == 401:
       raise exceptions.Unauthorized('''Error with Github api request:
-        401, user is not authorized: %s.''' % result.data)
-    elif result.status == 403:
+        401, user is not authorized: %s.''' % result)
+    elif status == 403:
       raise exceptions.MethodNotAllowed('''Error with Github api request:
         403, user is authenticated, but doesn't have permissions.''')
-    elif result.status == 404:
+    elif status == 404:
       raise exceptions.NotFound('''Error with Github api request:
-        404, data not found: %s''' % result.data)
-    elif result.status > 299:
+        404, data not found: %s''' % result)
+    elif status > 299:
       raise exceptions.BadRequest(
-        'Error with github api request: %s, %s' % (result.status, result.data))
-    return result.data
+        'Error with github api request: %s, %s' % (status, result))
+    return '{"response": ' + result + '}'
 
 
   def head(self, path, query=None, msg_type=None):
@@ -117,10 +154,6 @@ class GitRpc:
   def _remote(self, response, msg_type=None):
     # print 'RESPONSE: %s' % response
     if msg_type is not None:
-      # todo: i need a root node.. i don't knot if i can serialize anonymous
-      # root lists.. so i'm serializing, adding root node, then encoding back
-      # to a json str.. sorry for the waste.
-      response = dumps({'response': response})
       try:
         return message_from_json(msg_type, response)
       except AttributeError, e:

@@ -1,4 +1,5 @@
-from json import dumps
+from ..requests import UserEmailResponse
+from ..requests import UserEmailListResponse
 
 class UsersEmails:
   def __init__(self, client):
@@ -6,12 +7,12 @@ class UsersEmails:
 
   def list(self):
     return self.client.get(
-      'user/emails', msg_type=None)
+      'user/emails', msg_type=UserEmailListResponse)
 
   def add(self, emails):
     return self.client.post(
-      'user/emails', data=dumps(emails), msg_type=None)
+      'user/emails', data=emails, msg_type=UserEmailResponse)
 
   def delete(self, emails):
     return self.client.delete(
-      'user/emails', data=dumps(emails))
+      'user/emails', data=emails)

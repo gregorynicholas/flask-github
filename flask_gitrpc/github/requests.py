@@ -10,8 +10,14 @@ class RepoListResponse(msgs.Message):
 class HookResponse(msgs.Message):
   response = msgs.MessageField('Hook', 1)
 
+class HookTestResponse(msgs.Message):
+  response = msgs.MessageField('Hook', 1)
+
 class HookListResponse(msgs.Message):
   response = msgs.MessageField('Hook', 1, repeated=True)
+
+class HookPushPayload(msgs.Message):
+  payload = msgs.MessageField('HookCommit', 1)
 
 class CommitResponse(msgs.Message):
   response = msgs.MessageField('Commit', 1)
@@ -67,6 +73,12 @@ class UserResponse(msgs.Message):
 class UserListResponse(msgs.Message):
   response = msgs.MessageField('User', 1, repeated=True)
 
+class UserEmailResponse(msgs.Message):
+  response = msgs.MessageField('UserEmail', 1)
+
+class UserEmailListResponse(msgs.Message):
+  response = msgs.MessageField('UserEmail', 1, repeated=True)
+
 class BlobResponse(msgs.Message):
   response = msgs.MessageField('Blob', 1)
 
@@ -112,5 +124,38 @@ class GistResponse(msgs.Message):
 class GistListResponse(msgs.Message):
   response = msgs.MessageField('Gist', 1, repeated=True)
 
-class HookPushPayload(msgs.Message):
-  payload = msgs.MessageField('HookCommit', 1)
+class GistCommentResponse(msgs.Message):
+  response = msgs.MessageField('GistComment', 1)
+
+class GistCommentListResponse(msgs.Message):
+  response = msgs.MessageField('GistComment', 1, repeated=True)
+
+class IssueResponse(msgs.Message):
+  response = msgs.MessageField('Issue', 1)
+
+class IssueListResponse(msgs.Message):
+  response = msgs.MessageField('Issue', 1, repeated=True)
+
+class IssueEventResponse(msgs.Message):
+  response = msgs.MessageField('IssueEvent', 1)
+
+class IssueEventListResponse(msgs.Message):
+  response = msgs.MessageField('IssueEvent', 1, repeated=True)
+
+class IssueLabelResponse(msgs.Message):
+  response = msgs.MessageField('IssueLabel', 1)
+
+class IssueLabelListResponse(msgs.Message):
+  response = msgs.MessageField('IssueLabel', 1, repeated=True)
+
+class IssueMilestoneResponse(msgs.Message):
+  response = msgs.MessageField('IssueMilestone', 1)
+
+class IssueMilestoneListResponse(msgs.Message):
+  response = msgs.MessageField('IssueMilestone', 1, repeated=True)
+
+class IssueCommentResponse(msgs.Message):
+  response = msgs.MessageField('IssueComment', 1)
+
+class IssueCommentListResponse(msgs.Message):
+  response = msgs.MessageField('IssueComment', 1, repeated=True)

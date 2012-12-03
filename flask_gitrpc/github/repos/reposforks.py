@@ -1,3 +1,4 @@
+from ..requests import RepoResponse
 from ..requests import RepoListResponse
 
 class ReposForks:
@@ -16,4 +17,4 @@ class ReposForks:
     if org:
       query = {'org': org}
     return self.client.post('repos/%s/%s/forks' % (
-      self.client.user(user), repo), query=query)
+      self.client.user(user), repo), query=query, msg_type=RepoResponse)

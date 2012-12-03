@@ -54,9 +54,11 @@ class Events:
     users. If the user is authenticated as the given user, they will see private
     events. Otherwise, they'll only see public events.'''
     return self.client.get(
-      'users/%s/received_events' % self.client.user(user), msg_type=EventListResponse)
+      'users/%s/received_events' % self.client.user(user),
+      msg_type=EventListResponse)
 
   def list_received_public_events(self, user=None):
     '''List public events that a user has received.'''
     return self.client.get(
-      'users/%s/received_events/public' % self.client.user(user), msg_type=EventListResponse)
+      'users/%s/received_events/public' % self.client.user(user),
+      msg_type=EventListResponse)

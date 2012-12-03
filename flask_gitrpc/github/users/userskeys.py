@@ -22,7 +22,7 @@ class UsersKeys:
 
   def _create(self, msg):
     return self.client.post(
-      'user/keys', data=msg)
+      'user/keys', data=msg, msg_type=KeyResponse)
 
   def edit(self, id, title, key):
     msg = Key(

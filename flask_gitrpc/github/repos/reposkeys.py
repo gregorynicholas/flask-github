@@ -25,7 +25,7 @@ class ReposKeys:
   def _create(self, repo, msg, user=None):
     return self.client.post(
       'repos/%s/%s/keys' % (
-        self.client.user(user), repo), data=msg)
+        self.client.user(user), repo), data=msg, msg_type=KeyResponse)
 
   def edit(self, repo, id, title=None, key=None, user=None):
     msg = Key(

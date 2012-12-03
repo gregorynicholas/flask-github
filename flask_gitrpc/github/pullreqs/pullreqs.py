@@ -31,7 +31,8 @@ class PullRequests:
 
   def _create(self, repo, msg, user=None):
     return self.client.post(
-      'repos/%s/%s/pulls' % (self.client.user(user), repo), data=msg)
+      'repos/%s/%s/pulls' % (self.client.user(user), repo), data=msg,
+      msg_type=PullRequestResponse)
 
   def create_from_issue(self, repo, issue, base, head, user=None):
     msg = PullRequest(
@@ -40,7 +41,7 @@ class PullRequests:
       head=head)
     return self.client.post(
       'repos/%s/%s/pulls' % (
-        self.client.user(user), repo), data=msg)
+        self.client.user(user), repo), data=msg, msg_type=PullRequestResponse)
 
   def list_commits(self, repo, id, user=None):
     return self.client.get(

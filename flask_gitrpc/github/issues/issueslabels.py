@@ -1,3 +1,6 @@
+from ..messages import IssueLabel
+from ..requests import IssueLabelResponse
+from ..requests import IssueLabelListResponse
 
 class IssuesLabels:
   def __init__(self, client):
@@ -5,25 +8,26 @@ class IssuesLabels:
 
   def list_repo_labels(self, repo, user=None):
     return self.client.get('repos/%s/%s/labels' % (
-      repo, self.client.user(user)), msg_type=None)
+      repo, self.client.user(user)), msg_type=IssueLabelListResponse)
 
   def get(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/labels/%s' % (
-      repo, self.client.user(user), id), msg_type=None)
+      repo, self.client.user(user), id), msg_type=IssueLabelResponse)
 
   def create(self, repo, name, color, user=None):
-    msg = {
-      'name': name,
-      'color': color
-    }
+    msg = IssueLabel(
+      name=name,
+      color=color)
+    return self._create(repo=repo, msg=msg, user=user)
+
+  def _create(self, repo, msg, user=None):
     return self.client.post('repos/%s/%s/labels' % (
-      repo, self.client.user(user)), data=msg)
+      repo, self.client.user(user)), data=msg, msg_type=IssueLabelResponse)
 
   def edit(self, repo, id, name, color, user=None):
-    msg = {
-      'name': name,
-      'color': color
-    }
+    msg = IssueLabel(
+      name=name,
+      color=color)
     return self.client.patch('repos/%s/%s/labels/%s' % (
       repo, self.client.user(user), id), data=msg)
 
@@ -31,9 +35,11 @@ class IssuesLabels:
     return self.client.delete('repos/%s/%s/labels/%s' % (
       repo, self.client.user(user), id))
 
+  #
+
   def list_issue_labels(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/issues/%s/labels' % (
-      repo, self.client.user(user), id), msg_type=None)
+      repo, self.client.user(user), id), msg_type=IssueLabelListResponse)
 
   def add_issue_label(self, repo, id, labels, user=None):
     msg = labels
@@ -55,4 +61,4 @@ class IssuesLabels:
 
   def list_issue_milestone_labels(self, repo, id, user=None):
     return self.client.get('repos/%s/%s/milestones/%s/labels' % (
-      repo, self.client.user(user), id), msg_type=None)
+      repo, self.client.user(user), id), msg_type=IssueLabelListResponse)

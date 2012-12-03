@@ -1,30 +1,33 @@
+from ..messages import GistComment
+from ..requests import GistCommentResponse
+from ..requests import GistCommentListResponse
 
 class GistsComments:
   def __init__(self, client):
     self.client = client
 
-  def list_gist_comments(self, id):
+  def list(self, id):
     return self.client.get(
-      'gists/%s/comments' % id, msg_type=None)
+      'gists/%s/comments' % id, msg_type=GistCommentListResponse)
 
-  def get_gist_comment(self, id):
+  def get(self, id):
     return self.client.get(
-      'gists/comments/%s' % id, msg_type=None)
+      'gists/comments/%s' % id, msg_type=GistCommentResponse)
 
-  def create_gist_comment(self, id, body):
+  def create(self, id, body):
     msg = {
       'body': body
     }
     return self.client.post(
-      'gists/%s/comments' % id, data=msg)
+      'gists/%s/comments' % id, data=msg, msg_type=GistCommentResponse)
 
-  def edit_gist_comment(self, id, body):
+  def edit(self, id, body):
     msg = {
       'body': body
     }
     return self.client.patch(
-      'gists/comments/%s' % id, data=msg)
+      'gists/comments/%s' % id, data=msg, msg_type=GistCommentResponse)
 
-  def delete_gist_comment(self, id):
+  def delete(self, id):
     return self.client.delete(
       'gists/comments/%s' % id)

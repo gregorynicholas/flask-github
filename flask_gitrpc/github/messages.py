@@ -38,6 +38,9 @@ class User(msgs.Message):
   members_url = msgs.StringField(29)
   public_members_url = msgs.StringField(30)
 
+class UserEmail(msgs.Message):
+  pass
+
 class Repo(msgs.Message):
   id = msgs.IntegerField(1, default=0)
   name = msgs.StringField(2)
@@ -192,24 +195,22 @@ class Hook(msgs.Message):
 class HookConfig(msgs.Message):
   url = msgs.StringField(1)
   insecure_ssl = msgs.StringField(2)
-  content_type = msgs.StringField(3)
+  content_type = msgs.StringField(3, default='json')
 
 class Key(msgs.Message):
   id = msgs.IntegerField(1, default=0)
-  title = msgs.StringField(2)
-  key = msgs.StringField(3)
+  key = msgs.StringField(2)
+  title = msgs.StringField(3)
 
 class HookCommit(msgs.Message):
   before = msgs.StringField(1)
   after = msgs.StringField(2)
-  # refs/heads/master
-  ref = msgs.StringField(3)
+  ref = msgs.StringField(3, default='refs/heads/master')
   pusher = msgs.MessageField('HookUser', 4)
   commits = msgs.MessageField('Commit', 5)
   repository = msgs.MessageField('Repo', 6)
   head_commit = msgs.MessageField('Commit', 7)
-  # https://github.com/:user/:repo/compare/27766a14cfc5...36ddb3e3047b
-  compare = msgs.StringField(8)
+  compare = msgs.StringField(8, default='https://github.com/:user/:repo/compare/:hash1...:hash2')
   forced = msgs.BooleanField(9, default=False)
   deleted = msgs.BooleanField(10, default=False)
   created = msgs.BooleanField(11, default=False)
@@ -218,145 +219,101 @@ class HookUser(msgs.Message):
   name = msgs.StringField(1)
 
 class RepoDownload(msgs.Message):
-  '''
-  {
-    "url": "https://api.github.com/repos/octocat/Hello-World/downloads/1",
-    "html_url": "https://github.com/repos/octocat/Hello-World/downloads/new_file.jpg",
-    "id": 1,
-    "name": "new_file.jpg",
-    "description": "Description of your download",
-    "size": 1024,
-    "download_count": 40,
-    "content_type": ".jpg"
-  }
-  '''
-  pass
+  id = msgs.IntegerField(1, default=0)
+  url = msgs.StringField(2)
+  html_url = msgs.StringField(3)
+  name = msgs.StringField(4)
+  description = msgs.StringField(5)
+  size = msgs.IntegerField(6, default=0)
+  download_count = msgs.IntegerField(7, default=0)
+  content_type = msgs.StringField(8)
 
 class Comment(msgs.Message):
-  '''
-  {
-    "url": "https://api.github.com/repos/octocat/Hello-World/pulls/comments/1",
-    "id": 1,
-    "body": "Great stuff",
-    "path": "file1.txt",
-    "position": 4,
-    "commit_id": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
-    "user": {
-      "login": "octocat",
-      "id": 1,
-      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-      "gravatar_id": "somehexcode",
-      "url": "https://api.github.com/users/octocat"
-    },
-    "created_at": "2011-04-14T16:00:49Z",
-    "updated_at": "2011-04-14T16:00:49Z",
-    "_links": {
-      "self": {
-        "href": "https://api.github.com/octocat/Hello-World/pulls/comments/1"
-      },
-      "html": {
-        "href": "https://github.com/octocat/Hello-World/pull/1#discussion-diff-1"
-      },
-      "pull_request": {
-        "href": "https://api.github.com/octocat/Hello-World/pulls/1"
-      }
-    }
-  }
-  '''
-  pass
+  id = msgs.IntegerField(1, default=0)
+  url = msgs.StringField(2)
+  body = msgs.StringField(3)
+  path = msgs.StringField(4)
+  position = msgs.IntegerField(5, default=0)
+  commit_id = msgs.StringField(6)
+  user = msgs.MessageField('User', 7)
+  created_at = msgs.StringField(8)
+  updated_at = msgs.StringField(9)
+  _links = msgs.MessageField('Link', 10, repeated=True)
 
 class Event(msgs.Message):
-  '''
-  {
-    "type": "Event",
-    "public": true,
-    "payload": {
-
-    },
-    "repo": {
-      "id": 3,
-      "name": "octocat/Hello-World",
-      "url": "https://api.github.com/repos/octocat/Hello-World"
-    },
-    "actor": {
-      "login": "octocat",
-      "id": 1,
-      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-      "gravatar_id": "somehexcode",
-      "url": "https://api.github.com/users/octocat"
-    },
-    "org": {
-      "login": "octocat",
-      "id": 1,
-      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-      "gravatar_id": "somehexcode",
-      "url": "https://api.github.com/users/octocat"
-    },
-    "created_at": "2011-09-06T17:26:27Z",
-    "id": "12345"
-  }
-  '''
-  pass
+  id = msgs.IntegerField(1, default=0)
+  type = msgs.StringField(2)
+  public = msgs.BooleanField(3, default=True)
+  repo = msgs.MessageField('Repo', 4)
+  actor = msgs.MessageField('User', 5)
+  org = msgs.MessageField('Org', 6)
+  created_at = msgs.StringField(7)
 
 class Gist(msgs.Message):
   '''
   {
-    "url": "https://api.github.com/gists/ce31e712fff6a9f1b86d",
-    "id": "1",
-    "description": "description of gist",
-    "public": true,
-    "user": {
-      "login": "octocat",
-      "id": 1,
-      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-      "gravatar_id": "somehexcode",
-      "url": "https://api.github.com/users/octocat"
-    },
-    "files": {
-      "ring.erl": {
-        "size": 932,
-        "filename": "ring.erl",
-        "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring.erl"
-      }
-    },
-    "comments": 0,
-    "comments_url": "https://api.github.com/gists/3ade1a5eea22f140de20/comments/",
-    "html_url": "https://gist.github.com/1",
-    "git_pull_url": "git://gist.github.com/1.git",
-    "git_push_url": "git@gist.github.com:1.git",
-    "created_at": "2010-04-14T02:15:15Z",
-    "forks": [
-      {
-        "user": {
-          "login": "octocat",
-          "id": 1,
-          "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-          "gravatar_id": "somehexcode",
-          "url": "https://api.github.com/users/octocat"
-        },
-        "url": "https://api.github.com/gists/4c468075839a695a96ab",
-        "created_at": "2011-04-14T16:00:49Z"
-      }
-    ],
-    "history": [
-      {
-        "url": "https://api.github.com/gists/14a2302d4083e5331759",
-        "version": "57a7f021a713b1c5a6a199b54cc514735d2d462f",
-        "user": {
-          "login": "octocat",
-          "id": 1,
-          "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-          "gravatar_id": "somehexcode",
-          "url": "https://api.github.com/users/octocat"
-        },
-        "change_status": {
-          "deletions": 0,
-          "additions": 180,
-          "total": 180
-        },
-        "committed_at": "2010-04-14T02:15:15Z"
-      }
-    ]
+  "files": {
+    "ring.erl": {
+      "size": 932,
+      "filename": "ring.erl",
+      "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring.erl"
+    }
   }
+  "history": [
+    {
+      "url": "https://api.github.com/gists/14a2302d4083e5331759",
+      "version": "57a7f021a713b1c5a6a199b54cc514735d2d462f",
+      "user": {
+        "login": "octocat",
+        "id": 1,
+        "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+        "gravatar_id": "somehexcode",
+        "url": "https://api.github.com/users/octocat"
+      },
+      "change_status": {
+        "deletions": 0,
+        "additions": 180,
+        "total": 180
+      },
+      "committed_at": "2010-04-14T02:15:15Z"
+    }
+  ]
   '''
+  id = msgs.IntegerField(1, default=0)
+  url = msgs.StringField(2)
+  description = msgs.StringField(3)
+  public = msgs.BooleanField(4, default=True)
+  user = msgs.MessageField('User', 5)
+  comments = msgs.IntegerField(6, default=0)
+  comments_url = msgs.StringField(7)
+  html_url = msgs.StringField(8)
+  git_pull_url = msgs.StringField(9)
+  git_push_url = msgs.StringField(10)
+  created_at = msgs.StringField(11)
+  forks = msgs.MessageField('Gist', 12, repeated=True)
+
+class GistComment(msgs.Message):
   pass
+
+class Issue(msgs.Message):
+  title = msgs.StringField(1)
+  body = msgs.StringField(2)
+  state = msgs.StringField(3)
+  labels = msgs.StringField(4, repeated=True)
+  assignee = msgs.StringField(5)
+  milestone = msgs.StringField(6)
+
+class IssueEvent(msgs.Message):
+  pass
+
+class IssueLabel(msgs.Message):
+  pass
+
+class IssueMilestone(msgs.Message):
+  title = msgs.StringField(1)
+  state = msgs.StringField(2)
+  description = msgs.StringField(3)
+  due_on = msgs.StringField(4)
+
+class IssueComment(msgs.Message):
+  body = msgs.StringField(1)

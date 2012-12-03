@@ -29,7 +29,7 @@ class GitDataRefs:
   def _create(self, repo, msg, user=None):
     return self.client.post(
       'repos/%s/%s/git/refs' % (
-        self.client.user(user), repo), data=msg)
+        self.client.user(user), repo), data=msg, msg_type=RefResponse)
 
   def edit(self, repo, sha, force=False, user=None):
     msg = Ref(
@@ -40,4 +40,4 @@ class GitDataRefs:
   def _edit(self, repo, msg, user=None):
     return self.client.patch(
       'repos/%s/%s/git/refs' % (
-        self.client.user(user), repo), data=msg)
+        self.client.user(user), repo), data=msg, msg_type=RefResponse)
