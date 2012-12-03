@@ -126,19 +126,16 @@ class Tag(msgs.Message):
   type = msgs.StringField(6)
   sha = msgs.StringField(7)
   url = msgs.StringField(8)
-
-class RepoTag(msgs.Message):
-  name = msgs.StringField(1)
-  commit = msgs.MessageField('Commit', 2)
-  zipball_url = msgs.StringField(3)
-  tarball_url = msgs.StringField(4)
+  name = msgs.StringField(9)
+  commit = msgs.MessageField('Commit', 10)
+  zipball_url = msgs.StringField(11)
+  tarball_url = msgs.StringField(12)
 
 class Blob(msgs.Message):
   content = msgs.BytesField(1)
   encoding = msgs.StringField(2, default='utf-8')
   sha = msgs.StringField(3)
   size = msgs.IntegerField(4, default=0)
-
 
 class Org(msgs.Message):
   id = msgs.IntegerField(1, default=0)

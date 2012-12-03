@@ -51,7 +51,7 @@ class ReposHooks:
   def test(self, repo, id, user=None):
     return self.client.post(
       'repos/%s/%s/hooks/%s/test' % (
-        self.client.user(user), repo, id), msg_type=HookTestResponse)
+        self.client.user(user), repo, id))
 
   def delete(self, repo, id, user=None):
     return self.client.delete(

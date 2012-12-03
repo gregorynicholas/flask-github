@@ -1,16 +1,10 @@
 from ..messages import User
 from ..messages import Tag
 from ..requests import TagResponse
-from ..requests import TagListResponse
 
 class GitDataTags:
   def __init__(self, client):
     self.client = client
-
-  def list(self, repo, user=None):
-    return self.client.get(
-      'repos/%s/%s/git/tags' % (
-        self.client.user(user), repo), msg_type=TagListResponse)
 
   def get(self, repo, sha, user=None):
     return self.client.get(
