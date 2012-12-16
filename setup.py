@@ -18,7 +18,7 @@ from setuptools import setup
 setup(
   name='flask-gitrpc',
   version='1.0.0',
-  url='http://github.com/gregorynicholas/flask-gitrpc',
+  url='http://github.com/gregorynicholas/flask_gitrpc',
   license='MIT',
   author='gregorynicholas',
   description='Protocol Buffers for the Github API.',
