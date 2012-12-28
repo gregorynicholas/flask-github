@@ -27,32 +27,17 @@ class Events:
       'network/%s/%s/events' % (
         self.client.user(user), repo), msg_type=EventListResponse)
 
-  def list_user_events(self, user=None):
-    '''List events performed by a user.
-
-    If you are authenticated as the given user, you will see your private
-    events. Otherwise, you’ll only see public events.'''
-    return self.client.get(
-      'users/%s/events' % (self.client.user(user)), msg_type=EventListResponse)
-
-  def list_user_org_events(self, org):
-    '''List a user's events for an organization.
-
-    This is the user’s organization dashboard. You must be authenticated as the
-    user to view this.'''
-    return self.client.get(
-      'users/%s/events/orgs/%s' % (org), msg_type=EventListResponse)
-
   def list_org_public_events(self, org):
     '''List public events for an organization.'''
-    return self.client.get('orgs/%s/events' % org, msg_type=EventListResponse)
+    return self.client.get(
+      'orgs/%s/events' % org, msg_type=EventListResponse)
 
   def list_received_events(self, user=None):
     '''List events that a user has received.
 
     These are events that a user receives by watching repos and following
-    users. If the user is authenticated as the given user, they will see private
-    events. Otherwise, they'll only see public events.'''
+    users. If the user is authenticated as the given user, they will see
+    private events. Otherwise, they'll only see public events.'''
     return self.client.get(
       'users/%s/received_events' % self.client.user(user),
       msg_type=EventListResponse)
@@ -62,3 +47,22 @@ class Events:
     return self.client.get(
       'users/%s/received_events/public' % self.client.user(user),
       msg_type=EventListResponse)
+
+
+  def list_user_events(self, user=None):
+    '''List events performed by a user.
+
+    If you are authenticated as the given user, you will see your private
+    events. Otherwise, you'll only see public events.'''
+    return self.client.get(
+      'users/%s/events' % (
+        self.client.user(user)), msg_type=EventListResponse)
+
+  def list_user_org_events(self, org, user=None):
+    '''List a user's events for an organization.
+
+    This is the user's organization dashboard. You must be authenticated as
+    the user to view this.'''
+    return self.client.get(
+      'users/%s/events/orgs/%s' % (
+        self.client.user(user), org), msg_type=EventListResponse)

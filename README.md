@@ -1,10 +1,9 @@
-# Flask Github
+# flask-github
 
-Python library for the Github v3 API, using remote procedure calls and Google's
-Protocol Buffer library.
+Github API v3 python client built using Google's Protocol Buffers.
 
 ----
 
 ### install with pip
 
-`pip install git+https://github.com/gregorynicholas/flask-gitrpc.git#egg=flask-gitrpc==1.0.0`
+    pip install https://github.com/gregorynicholas/flask-github/tarball/master

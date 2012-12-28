@@ -5,17 +5,17 @@ from urllib2 import Request, urlopen
 from datetime import datetime, timedelta
 from flask_protorpc.proto import message_from_json, message_to_json
 from werkzeug import exceptions
-from github.orgs import orgs
-from github.repos import repos
-from github.users import users
-from github.events import events
-from github.issues import issues
-from github.gitdata import gitdata
-from github.pullreqs import pullreqs
+from client.orgs import orgs
+from client.repos import repos
+from client.users import users
+from client.events import events
+from client.issues import issues
+from client.gitdata import gitdata
+from client.pullreqs import pullreqs
 
-__all__ = ['GitRpc']
+__all__ = ['Github']
 
-class GitRpc:
+class Github:
   def __init__(self, app, config, access_token, username=None, password=None):
     if not app:
       raise ValueError('Github oauth app not passed to constructor.')
