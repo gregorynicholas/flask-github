@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import IssueMilestone
 from ..requests import IssueMilestoneResponse
 from ..requests import IssueMilestoneListResponse

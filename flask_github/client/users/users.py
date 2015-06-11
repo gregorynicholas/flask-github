@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from userskeys import UsersKeys
 from usersemails import UsersEmails
 from usersfollowers import UsersFollowers

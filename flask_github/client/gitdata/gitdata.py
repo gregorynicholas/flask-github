@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from gitdatarefs import GitDataRefs
 from gitdatatags import GitDataTags
 from gitdatatrees import GitDataTrees

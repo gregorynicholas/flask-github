@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import GistComment
 from ..requests import GistCommentResponse
 from ..requests import GistCommentListResponse

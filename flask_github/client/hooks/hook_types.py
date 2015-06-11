@@ -15,6 +15,7 @@
   :public: Any time a Repository changes from private to public.
   :status: Any time a Repository has a status update from the API
 '''
+from __future__ import unicode_literals
 
 EVENTS = dict(
   PUSH='push',

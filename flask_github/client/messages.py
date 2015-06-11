@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from flask_protorpc.proto import messages as msgs
 
 class Link(msgs.Message):

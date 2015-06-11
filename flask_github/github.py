@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import logging
 from json import dumps
 from urllib import urlencode
@@ -13,7 +14,9 @@ from client.issues import issues
 from client.gitdata import gitdata
 from client.pullreqs import pullreqs
 
+
 __all__ = ['Github']
+
 
 class Github:
   def __init__(self, app, config, access_token, username=None, password=None):

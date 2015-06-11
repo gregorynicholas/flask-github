@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import IssueEvent
 from ..requests import IssueEventResponse
 from ..requests import IssueEventListResponse

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..requests import RepoResponse
 from ..requests import RepoListResponse
 

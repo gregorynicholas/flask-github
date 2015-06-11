@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import Team
 from ..requests import TeamResponse
 from ..requests import TeamListResponse

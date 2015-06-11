@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import Commit
 from ..requests import CommitResponse
 from ..requests import CommitListResponse

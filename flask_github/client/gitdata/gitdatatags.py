@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import User
 from ..messages import Tag
 from ..requests import TagResponse

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import Ref
 from ..requests import RefResponse
 from ..requests import RefListResponse

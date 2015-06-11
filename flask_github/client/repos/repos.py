@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from reposkeys import ReposKeys
 from reposhooks import ReposHooks
 from reposforks import ReposForks

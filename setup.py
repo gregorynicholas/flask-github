@@ -1,29 +1,56 @@
 #!/usr/bin/env python
 """
 flask-github
---------------
+~~~~~~~~~~~~
 
-Github API v3 python client built using Google's Protocol Buffers.
+github api v3 python client built using google's protocol buffers.
 
-http://github.com/gregorynicholas/flask-github
-`````
 
-* `documentation <http://packages.python.org/flask-github>`_
-* `development version
-  <http://github.com/gregorynicholas/flask-github/tarball/master#egg=flask-github-dev>`_
+links:
+``````
+
+* `docs: <http://gregorynicholas.github.io/flask-github>`_
+* `source: <http://github.com/gregorynicholas/flask-github>`_
+* `package: <http://packages.python.org/flask-github>`_
+* `travis-ci: <http://travis-ci.org/gregorynicholas/flask-github>`_
+* `issues: <http://github.com/gregorynicholas/flask-github/issues>`_
+* `development version: <http://github.com/gregorynicholas/flask-github/zipball/master#egg=flask-github-dev>`_
 
 """
-from setuptools import setup
+try:
+  from setuptools import setup
+except ImportError:
+  from distutils.core import setup
+
+from os import path, listdir
+import fnmatch as fm
+import re
+
+
+# parse version number
+with open('flask_github/__init__.py', 'r') as f:
+  v = re.findall(r'__version__\s*=\s*\'(.*)\'', f.read())
+  __version__ = v[0]
+
+with open("requirements.txt", "r") as f:
+  requires = f.readlines()
+
 
 setup(
   name='flask-github',
-  version='1.0.0',
+  version=__version__,
   url='http://github.com/gregorynicholas/flask-github',
-  license='MIT',
   author='gregorynicholas',
-  description=''''Github API v3 python client built using Google's Protocol Buffers.''',
+  author_email='gn@gregorynicholas.com',
+
+  description='github api v3 python client built using google protocol buffers.',
   long_description=__doc__,
-  download_url='https://github.com/gregorynicholas/flask-github/tarball/master',
+
+  install_requires=requires,
+
+  scripts=[
+  ],
+
   packages=[
     'flask_github.client',
     'flask_github.client.events',
@@ -35,22 +62,29 @@ setup(
     'flask_github.client.repos',
     'flask_github.client.users',
   ],
+
   namespace_packages=[
-    'flask_github',
+    # 'flask_github',
   ],
+
   py_modules=[
-    'flask_github.github',
+    # 'flask_github.github',
   ],
-  zip_safe=False,
-  platforms='any',
-  install_requires=[
-    'flask',
-    'flask-oauth',
-    'flask-protorpc',
+
+  test_suite='nose.collector',
+  tests_require=[
+    'flask-funktional',
+    'nose',
+    'nose-cov',
+    'mock',
   ],
+
   dependency_links = [
     'https://github.com/gregorynicholas/flask-protorpc/tarball/master',
   ],
+  license='MIT',
+  zip_safe=False,
+  platforms='any',
   classifiers=[
     'Development Status :: 4 - Beta',
     'Environment :: Web Environment',

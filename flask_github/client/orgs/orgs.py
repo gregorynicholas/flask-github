@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from orgteams import OrgTeams
 from orgmembers import OrgMembers
 from ..messages import Org

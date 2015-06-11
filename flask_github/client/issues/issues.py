@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from issuesevents import IssuesEvents
 from issueslabels import IssuesLabels
 from issuescomments import IssuesComments

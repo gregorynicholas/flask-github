@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from pullreqsreviewcomments import PullReviewComments
 from ..messages import PullRequest
 from ..messages import CommitMessage

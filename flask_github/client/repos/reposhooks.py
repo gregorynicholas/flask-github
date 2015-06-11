@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import Hook, HookConfig
 from ..requests import HookResponse
 from ..requests import HookTestResponse

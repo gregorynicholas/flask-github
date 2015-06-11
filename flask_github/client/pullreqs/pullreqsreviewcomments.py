@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import PullReviewComment
 from ..requests import PullReviewCommentResponse
 from ..requests import PullReviewCommentListResponse

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ..messages import Key
 from ..requests import KeyResponse
 from ..requests import KeyListResponse

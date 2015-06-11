@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import json
 from ..requests import RepoDownloadResponse
 from ..requests import RepoDownloadListResponse
